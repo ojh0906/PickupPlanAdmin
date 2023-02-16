@@ -6,7 +6,16 @@
 .inner{
     margin: 200px auto;
 }
-
+input[type=checkbox] {
+    color: #fff !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+:root {
+    background: #fff;
+    accent-color:#fff;
+    color: #fff;
+}
 
 .container{
     justify-content: center;
@@ -916,6 +925,47 @@
     background: #fff;
     width: 100px;
 }
+
+
+/*  검색 레이아웃  */
+.main-container .top-container .search-container{
+    float: right;
+}
+.main-container .top-container .search-container select{
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    width: 120px;
+    padding: 8px 6px;
+    box-sizing: border-box;
+    margin-right: 3px;
+}
+.main-container .top-container .search-container input[type=text]{
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    width: 230px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+}
+.main-container .top-container .search-container input[type=text]::placeholder{
+    color: #A5A5A5;
+}
+.main-container .top-container .search-container .search-icon{
+    position: relative;
+    right: 25px;
+}
+.main-container .top-container .search-container input[type=image]{
+    background: #8800FB;
+    width: 17px;
+    padding: 9px;
+    vertical-align: middle;
+}
+
 
     /*    Modal    */
 .modal-background{

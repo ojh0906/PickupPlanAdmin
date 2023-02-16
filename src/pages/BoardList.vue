@@ -4,7 +4,21 @@
     <div class="main-container">
       <div class="top-container">
         <span class="tit">게시판 관리</span>
+        <div class="search-container">
+          <form>
+            <select>
+              <option>유저번호</option>
+              <option>핸드폰 번호</option>
+              <option>닉네임</option>
+            </select>
+            <input type="text" placeholder="검색어 입력" />
+            <span class="search-icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </form>
+        </div>
       </div>
+
       <div class="board-container">
         <div class="board-filter-wrap">
           <div class="filter-container">
