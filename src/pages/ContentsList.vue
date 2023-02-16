@@ -22,7 +22,6 @@
             </div>
             <div class="filter-wrap">
               <router-link :to="{ name: 'ContentsRecommend', query: {} }" class="button" >추천설정</router-link>
-
             </div>
           </div>
         </div>
@@ -70,7 +69,7 @@
                 콘텐츠 제목이 노출 되는 영역 …
               </td>
               <td>
-                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>
+                <router-link :to="{ name: 'ContentsDetail', query: {} }" class="view-detail" >상세보기</router-link>
               </td>
             </tr>
             </tbody>

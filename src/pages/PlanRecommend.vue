@@ -3,7 +3,7 @@
     <Header />
     <div class="main-container">
       <div class="top-container">
-        <span class="tit">콘텐츠 추천 설정</span>
+        <span class="tit">플랜 추천 설정</span>
       </div>
       <!--  카테고리  -->
       <div class="contents-category-list">
@@ -44,8 +44,8 @@
             <tr class="table-head">
               <th width="3%"></th>
               <th width="10%">순서</th>
-              <th width="50%">콘텐츠 제목</th>
-              <th width="15%">강사명</th>
+              <th width="50%">플랜 제목</th>
+              <th width="15%">파트너 ID</th>
               <th></th>
             </tr>
             </thead>
@@ -58,10 +58,10 @@
                 1
               </td>
               <td class="">
-                콘텐츠 제목이 노출 되는 영역 …
+                플랜 제목이 노출 되는 영역 …
               </td>
               <td>
-                강사명
+                plan02
               </td>
               <td>
                 <router-link :to="{ name: 'ContentsDetail', query: {} }" class="view-detail" >상세보기</router-link>
@@ -122,7 +122,7 @@
           <div class="info">
             <table>
               <tr>
-                <td colspan="2">콘텐츠 제목</td>
+                <td colspan="2">플랜 제목</td>
               </tr>
               <tr>
                 <td>작성자 ID</td>

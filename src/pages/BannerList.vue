@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="board-filter-right-wrap">
-          <span class="edit-btn">작성 하기</span>
+          <router-link :to="{ name: 'BannerSetting', query: {} }" class="edit-btn" >작성 하기</router-link>
         </div>
         <div class="table-wrap">
           <table>
@@ -52,7 +52,7 @@
                 배너의 제목이 노출되는 영역입니다.
               </td>
               <td>
-                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>
+                <router-link :to="{ name: 'BannerSetting', query: {} }" class="view-detail" >상세보기</router-link>
               </td>
             </tr>
             </tbody>

@@ -21,7 +21,7 @@
               <p class="button">승인하기</p>
             </div>
             <div class="filter-wrap">
-              <p class="button">추천설정</p>
+              <router-link :to="{ name: 'PlanRecommend', query: {} }" class="button" >추천설정</router-link>
             </div>
           </div>
         </div>
