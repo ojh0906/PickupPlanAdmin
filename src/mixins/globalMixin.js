@@ -25,7 +25,6 @@ export default {
     },
     getNameFromValue(value, nameValueList){
       var result = 'error';
-      console.log(value, nameValueList)
       var index = nameValueList.findIndex(v => v.value === value);
 
       if(index >= 0){

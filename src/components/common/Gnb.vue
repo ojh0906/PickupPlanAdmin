@@ -4,11 +4,11 @@
       <p class="page-name"><span class="colored">픽업플랜</span> 관리자 센터</p>
     </div>
     <div class="home-menu">
-      <router-link :to="{ name: 'Index', query: {} }" :class="this.dash ? 'menu active':'menu'">홈(대시보드)</router-link>
+      <router-link :to="{ name: 'Index', query: {} }" :class="this.active === 'dash' ? 'menu active':'menu'">홈(대시보드)</router-link>
     </div>
     <div class="menu-list-container">
       <div class="menu-item">
-        <router-link :to="{ name: 'PartnerList', query: {} }" :class="this.partner ? 'menu active':'menu'">파트너 관리</router-link>
+        <router-link :to="{ name: 'MemberList', query: {} }" :class="this.active === 'member' ? 'menu active':'menu'">회원 관리</router-link>
       </div>
       <div class="menu-item">
         <router-link :to="{ name: 'ContentsList', query: {} }" :class="this.contents ? 'menu active':'menu'">콘텐츠 관리</router-link>
@@ -38,41 +38,15 @@ export default {
   props: [''],
   data() {
     return {
-      dash:true,
-      partner:false,
-      contents:false,
-      plan:false,
-      exhibition:false,
-      contact:false,
-      board:false,
-      banner:false,
+      active:'dash',
     }
   },
   watch: {
 
   },
   methods: {
-    setGnbInfo(type){
-      this.dash =  false;
-      this.partner =  false;
-      this.contents = false;
-      this.plan = false;
-      this.exhibition = false;
-      this.contact = false;
-      this.board = false;
-      this.banner = false;
-
-      switch (type){
-        case 1: this.dash = true; break;
-        case 2: this.partner = true; break;
-        case 3: this.contents = true; break;
-        case 4: this.plan = true; break;
-        case 5: this.exhibition = true; break;
-        case 6: this.contact = true; break;
-        case 7: this.board = true; break;
-        case 8: this.banner = true; break;
-
-      }
+    activeBtn(type){
+      this.active = type;
     },
     setLoginInfo(login){
       // this.login =  login;

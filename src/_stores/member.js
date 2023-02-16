@@ -22,7 +22,6 @@ export const useMemberStore = defineStore({
     async getAll(params) {
       try {
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          console.log(resp)
           this.member_list = [];
           if (resp.data.code === 200) {
             this.member_list = resp.data.body;

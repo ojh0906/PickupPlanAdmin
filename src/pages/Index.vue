@@ -53,21 +53,33 @@
 </template>
 <script>
 import Header from '/src/components/common/Header.vue';
+import { useAuthStore } from '@/_stores';
 
 export default {
   components: {
     Header,
   },
   data() {
-
+    return {
+      id: "admin",
+      password: "1234",
+    }
   },
   watch:{
 
   },
   methods: {
+    onSubmit() {
+      const authStore = useAuthStore();
+      // const param = JSON.stringify(values, null, 2);
+      // console.log("param", param);
+      return authStore.login(this.id, this.password)
+          .catch(error => console.log(error));
+    },
   },
   created() {
     this.$parent.$parent.$refs.gnb.setGnbInfo(1);
+    this.onSubmit();
   }
 }
 </script>

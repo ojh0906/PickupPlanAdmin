@@ -1,5 +1,5 @@
-import MemberList from "/src/pages/PartnerList.vue";
-import MemberDetail from "/src/pages/PartnerDetail.vue";
+import MemberList from "/src/pages/member/PartnerList.vue";
+import MemberDetail from "/src/pages/member/PartnerDetail.vue";
 
 export default [
   {
