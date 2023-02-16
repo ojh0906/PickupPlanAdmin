@@ -6,7 +6,7 @@ export default [
     path: "/board/",
     children: [
       { path: "list", name: 'BoardList', component: BoardList, meta: { title: "게시판 관리" } },
-      { path: "detail", name: 'BoardDetail', component: BoardList, meta: { title: "게시판 상세" } },
+      { path: "detail", name: 'BoardDetail', component: BoardDetail, meta: { title: "게시판 상세" } },
     ],
   },
 ];
