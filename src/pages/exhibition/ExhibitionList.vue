@@ -51,7 +51,7 @@
                 00명
               </td>
               <td>
-                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>
+<!--                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>-->
               </td>
             </tr>
             </tbody>
@@ -84,7 +84,7 @@ export default {
   methods: {
   },
   created() {
-    this.$parent.$parent.$refs.gnb.setGnbInfo(5);
+    this.$parent.$parent.$refs.gnb.activeBtn("exhibition");
   }
 }
 </script>

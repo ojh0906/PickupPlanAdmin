@@ -31,13 +31,24 @@
           </tr>
           <tr>
             <td class="title">URL</td>
-            <td colspan="3"></td>
+            <td colspan="3">
+              <input type="text" placeholder="URL을 입력하세요." readonly />
+            </td>
           </tr>
           <tr>
             <td class="title">이미지 등록</td>
-            <td colspan="3"></td>
+            <td colspan="3">
+              <input type="file">
+              <div class="file-list">
+                <span>배너1.jpg <i class="fas fa-times"></i></span>
+              </div>
+            </td>
           </tr>
         </table>
+        <div class="submit-wrap">
+          <span class="submit">저장</span>
+          <span class="submit">취소</span>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +70,7 @@ export default {
   methods: {
   },
   created() {
-    this.$parent.$parent.$refs.gnb.setGnbInfo(8);
+    this.$parent.$parent.$refs.gnb.activeBtn("banner");
   }
 }
 </script>

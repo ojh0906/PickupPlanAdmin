@@ -185,8 +185,9 @@ input[type=checkbox] {
 }
 .main-container .top-container .sub{
     font-weight: 700;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 17px;
+    margin-top: 15px;
 }
 .main-container .top-container .reckon-status{
     font-weight: 700;
@@ -619,6 +620,7 @@ input[type=checkbox] {
     margin: 40px auto;
     display: flex;
     flex-wrap: wrap;
+    width: 90%;
 }
 .partner-detail-container .title-wrap{
     width: 17%;
@@ -665,7 +667,7 @@ input[type=checkbox] {
 .contents-category-list{
     max-width: 1100px;
     margin: 40px auto 60px;
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -693,7 +695,7 @@ input[type=checkbox] {
 .contents-detail-container{
     max-width: 1100px;
     margin: 0 auto;
-
+    width: 90%;
 }
 .contents-detail-container .info-container{
     width: 100%;
@@ -899,7 +901,7 @@ input[type=checkbox] {
     max-width: 1100px;
     border-collapse: collapse;
     border: 1px solid #000;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
 }
 .bannerSetting-container table .title{
@@ -925,9 +927,83 @@ input[type=checkbox] {
     background: #fff;
     width: 100px;
 }
+.bannerSetting-container table input[type=text]{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 17px;
+    border: 1px solid #A5A5A5;
+    border-radius: 3px;
+    padding: 5px 10px 5px;
+    width: 100%;
+    background: #fff;
+    color: #000;
+    border: none;
+    outline: none;
+}
+.bannerSetting-container table .file-list{
+    display: inline-block;
+}
+.bannerSetting-container table .file-list span{
+
+}
+.bannerSetting-container table .file-list i{
+    cursor: pointer;
+}
+.bannerSetting-container .submit-wrap{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+.bannerSetting-container .submit-wrap .submit{
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff !important;
+    background: #8800FB;
+    border: 1px solid #8800FB;
+    border-radius: 5px;
+    padding: 12px 10px;
+    box-sizing: border-box;
+    width: 100px;
+    display: inline-block;
+    margin: 0 15px;
+}
+/*  게시판 상새페이지  */
+.boardDetail-container{
+    max-width: 1100px;
+    width: 90%;
+    margin: 40px auto;
+}
+.boardDetail-container .head-wrap{
+    display: flex;
+    padding: 12px;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+.boardDetail-container .head-wrap .type{
+    width: 15%;
+}
+.boardDetail-container .head-wrap .regdate{
+    width: 20%;
+}
+.boardDetail-container .head-wrap .title{
+    width: 65%;
+    font-weight: 700;
+}
+.boardDetail-container .head-wrap span{
+    font-size: 16px;
+    text-align: center;
+}
+.boardDetail-container .content{
+    min-height: 200px;
+}
+.boardDetail-container .file-list{
+    width: 100%;
+
+}
 
 
-/*  검색 레이아웃  */
+    /*  검색 레이아웃  */
 .main-container .top-container .search-container{
     float: right;
 }

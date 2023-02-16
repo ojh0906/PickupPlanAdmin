@@ -78,7 +78,7 @@ export default {
     },
   },
   created() {
-    this.$parent.$parent.$refs.gnb.setGnbInfo(1);
+    this.$parent.$parent.$refs.gnb.activeBtn("index");
     this.onSubmit();
   }
 }

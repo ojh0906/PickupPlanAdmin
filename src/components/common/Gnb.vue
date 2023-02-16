@@ -11,22 +11,22 @@
         <router-link :to="{ name: 'MemberList', query: {} }" :class="this.active === 'member' ? 'menu active':'menu'">회원 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'ContentsList', query: {} }" :class="this.contents ? 'menu active':'menu'">콘텐츠 관리</router-link>
+        <router-link :to="{ name: 'ContentsList', query: {} }" :class="this.active === 'contents' ? 'menu active':'menu'">콘텐츠 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'PlanList', query: {} }" :class="this.plan ? 'menu active':'menu'">플랜 관리</router-link>
+        <router-link :to="{ name: 'PlanList', query: {} }" :class="this.active === 'plan' ? 'menu active':'menu'">플랜 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'ExhibitionList', query: {} }" :class="this.exhibition ? 'menu active':'menu'">기획전 관리</router-link>
+        <router-link :to="{ name: 'ExhibitionList', query: {} }" :class="this.active === 'exhibition' ? 'menu active':'menu'">기획전 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'ContactList', query: {} }" :class="this.contact   ? 'menu active':'menu'">문의 관리</router-link>
+        <router-link :to="{ name: 'ContactList', query: {} }" :class="this.active === 'contact' ? 'menu active':'menu'">문의 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'BoardList', query: {} }" :class="this.board  ? 'menu active':'menu'">게시판 관리</router-link>
+        <router-link :to="{ name: 'BoardList', query: {} }" :class="this.active === 'board' ? 'menu active':'menu'">게시판 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'BannerList', query: {} }" :class="this.banner  ? 'menu active':'menu'">배너 관리</router-link>
+        <router-link :to="{ name: 'BannerList', query: {} }" :class="this.active === 'banner' ? 'menu active':'menu'">배너 관리</router-link>
       </div>
     </div>
   </div>

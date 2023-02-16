@@ -1,6 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeRoutes from "./home.routes";
 import MemberRoutes from "./member.routes";
+import ContentsRoutes from "./contents.routes";
+import PlanRoutes from "./plan.routes";
+import ExhibitionRoutes from "./exhibition.routes";
+import ContactRoutes from "./contact.routes";
+import BoardRoutes from "./board.routes";
+import BannerRoutes from "./banner.routes";
+
+
 import Login from "/src/pages/Login.vue";
 
 import {useRouteHistoryStore} from '@/_stores/route_history'
@@ -10,6 +18,12 @@ const routes = [
     { path: "/login", name:"Login", component: Login }, // 비로그인 시 해당 페이지로 라우팅
     ...HomeRoutes,
     ...MemberRoutes,
+    ...ContentsRoutes,
+    ...PlanRoutes,
+    ...ExhibitionRoutes,
+    ...ContactRoutes,
+    ...BoardRoutes,
+    ...BannerRoutes,
     //...NoticeRoutes,
     //...ContactRoutes,
     //...FaqRoutes,
