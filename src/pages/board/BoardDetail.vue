@@ -15,11 +15,31 @@
         <div class="content">
 
         </div>
+        <!--  파일 리스트  -->
         <div class="file-list">
           <div class="file">
             <i class="far fa-file-alt"></i>
             <a>이미지.png</a>
           </div>
+          <div class="file">
+            <i class="far fa-file-alt"></i>
+            <a>이미지.png</a>
+          </div>
+        </div>
+        <!--  이전/다음 글  -->
+        <div class="b-list-wrap">
+          <a>
+            <span>이전글</span>
+            <span>공지사항</span>
+            <span>22.07.01</span>
+            <span>공지사항 제목이 노출되는 영역입니다.</span>
+          </a>
+          <a>
+            <span>다음글</span>
+            <span>블로그</span>
+            <span>22.07.01</span>
+            <span>블로그 제목이 노출되는 영역입니다.</span>
+          </a>
         </div>
       </div>
     </div>
