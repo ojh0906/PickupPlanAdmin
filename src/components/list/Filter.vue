@@ -1,6 +1,5 @@
 <template>
   <div class="board-filter-right-wrap">
-    <span :class="btn.on ? 'stop-user edit-btn':'stop-user'" v-for="btn in this.btn_list" @click="btn.on = !btn.on; btnEvent(btn.func)">{{ btn.text }}</span>
     <select v-model="this.page_block">
       <option v-for="option in this.page_block_list" v-bind:value="option.value">{{option.text}}</option>
     </select>
@@ -9,7 +8,7 @@
 
 <script>
 export default {
-  props: ['page_block_list','btn_list'],
+  props: ['page_block_list'],
   setup() {
     return {
     }
@@ -27,9 +26,7 @@ export default {
     },
   },
   methods: {
-    btnEvent(eventName){
-      this.$emit(eventName);
-    }
+
   },
   components: {
 

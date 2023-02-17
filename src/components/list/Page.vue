@@ -1,23 +1,23 @@
 <template>
   <div class="paging-wrap">
     <a @click="this.onChangePage(1);"
-       v-if="this.start_page !== 1">
+       v-if="this.storeInfo.start_page !== 1">
       <i class="fas fa-angle-double-left"></i>
     </a>
-    <a @click="this.onChangePage(this.start_page - 1);"
-       v-if="this.start_page !== 1">
+    <a @click="this.onChangePage(this.storeInfo.start_page - 1);"
+       v-if="this.storeInfo.start_page !== 1">
       <i class="fas fa-angle-left"></i>
     </a>
-    <a :class="this.page == page ? 'active':''" v-for="page in pagesList"
+    <a :class="this.storeInfo.page == page ? 'active':''" v-for="page in storeInfo.pagesList"
        @click="onChangePage(page)">
       {{ page }}
     </a>
-    <a @click="this.onChangePage(this.start_page + this.num_block);"
-       v-if="this.end_page !== this.endPage + 1">
+    <a @click="this.onChangePage(this.storeInfo.start_page + this.storeInfo.num_block);"
+       v-if="this.storeInfo.end_page !== this.storeInfo.endPage + 1">
       <i class="fas fa-angle-right"></i>
     </a>
-    <a @click="this.onChangePage(this.endPage);"
-       v-if="this.end_page !== this.endPage + 1">
+    <a @click="this.onChangePage(this.storeInfo.endPage);"
+       v-if="this.storeInfo.end_page !== this.storeInfo.endPage + 1">
       <i class="fas fa-angle-double-right"></i>
     </a>
   </div>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ['totalCnt','page','page_block','num_block','endPage','start_page','end_page','pagesList'],
+  props: ['storeInfo'],
   setup() {
     return {
     }
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     onChangePage(page){
-      if(this.page == page) return;
+      if(this.storeInfo.page == page) return;
       this.$emit('getListOtherPage',page);
     },
   },

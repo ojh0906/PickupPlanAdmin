@@ -5,7 +5,7 @@
       <div class="top-container">
         <span class="tit">회원 관리</span>
         <!-- 검색 -->
-        <Search :search_type_list="search_type_list" @getListAfterSearching="getListAfterSearching"/>
+        <Search :search_type_list="this.memberStore.search_type_list" @getListAfterSearching="getListAfterSearching"/>
       </div>
       <div class="board-container">
         <div class="board-filter-wrap">
@@ -14,26 +14,17 @@
               <p class="button" @click="removeAll">선택 삭제</p>
             </div>
             <div class="filter-wrap">
-              <p class="button" @click="updateStateAll">승인하기</p>
+              <p class="button" @click="approvePartnerAll(3)">승인하기</p>
             </div>
           </div>
         </div>
-        <div class="board-filter-right-wrap">
-<!--          <span class="stop-user">다운로드</span>-->
-          <select>
-            <option>10개씩 보기</option>
-            <option>5개씩 보기</option>
-          </select>
-        </div>
+        <Filter :page_block_list="this.memberStore.page_block_list" @getListAfterChangingPageBlock="getListAfterChangingPageBlock"/>
 
         <!-- 리스트 영역 -->
-        <Table :header="this.header" :list="this.listForTable" />
+        <Table :header="this.memberStore.header" :list="this.listForTable" />
 
-        <div class="paging-wrap">
-          <a class="active">1</a>
-          <a>2</a>
-          <a>3</a>
-        </div>
+        <!-- 페이징 -->
+        <Page :storeInfo="this.memberStore" @getListOtherPage="getListOtherPage"/>
       </div>
 
     </div>
@@ -60,41 +51,8 @@ export default {
   },
   setup(){
     const memberStore = useMemberStore();
-    const header = [
-      {title:'', width:'3%', type:'checkbox'},
-      {title:'구분', width:'5%'},
-      {title:'상태', width:'5%'},
-      {title:'가입일', width:'10%'},
-      {title:'아이디', width:'15%'},
-      {title:'연락처', width:'15%'},
-      {title:'이메일', width:'15%'},
-      {title:'', width:'20%'},
-    ];
-    const search_type_list = [
-      { text: '제목', value: 'title'},
-      { text: '내용', value: 'content'},
-    ];
-    const page_block_list = [
-      { text: '10개씩 보기', value: 10},
-      { text: '5개씩 보기', value: 5},
-    ];
-    const type_name_value_list = [
-      { name: '일반', value: 1},
-      { name: '강사', value: 2},
-      { name: '파트너', value: 3},
-    ];
-    const state_name_value_list = [
-      { name: '강사 신청', value: 1},
-      { name: '파트너 신청', value: 2},
-      { name: '완료', value: 3},
-    ];
     return {
       memberStore,
-      header,
-      search_type_list,
-      page_block_list,
-      type_name_value_list,
-      state_name_value_list,
     }
   },
   data() {
@@ -102,7 +60,6 @@ export default {
       listForTable:[],
       searchType:'',
       searchKeyword:'',
-      checkList:[],
     }
   },
   watch:{
@@ -115,6 +72,11 @@ export default {
         page_block: this.memberStore.page_block,
       }
 
+      if(this.searchKeyword !== ''){
+        params.searchType = this.searchType;
+        params.searchKeyword = this.searchKeyword;
+      }
+
       this.memberStore.getAll(params).then(() => {
         this.setListForTable();
       }).catch(err => { console.log("err", err); });
@@ -124,8 +86,8 @@ export default {
       this.memberStore.member_list.forEach((member, idx) => {
         let td_data = [];
         td_data.push({t:'', class:'', type:'checkbox', param:{check:false, member:member.member}});
-        td_data.push({t:this.getNameFromValue(member.type, this.type_name_value_list), class:'', type:'text', param:{}});
-        td_data.push({t:this.getNameFromValue(member.partner_info == null ? 3:member.partner_info.state, this.state_name_value_list), class:'', type:'text', param:{}});
+        td_data.push({t:this.getNameFromValue(member.type, this.memberStore.type_name_value_list), class:'', type:'text', param:{}});
+        td_data.push({t:this.getNameFromValue(member.partner_info == null ? 3:member.partner_info.state, this.memberStore.state_name_value_list), class:'', type:'text', param:{}});
         td_data.push({t:this.formattedDate(member.regdate,'YY.MM.DD'), class:'bold', type:'text', param:{}});
         td_data.push({t:member.id, class:'bold', type:'text', param:{}});
         td_data.push({t:member.phone, class:'', type:'text', param:{}});
@@ -139,14 +101,6 @@ export default {
       this.searchKeyword = searchKeyword;
       this.getListOtherPage(1);
     },
-    sellerApplyChange(){
-      if(this.sellerApply){
-        this.sellerApply = false;
-      } else {
-        this.sellerApply = true;
-      }
-      this.getListOtherPage(1);
-    },
     getListAfterChangingPageBlock(page_block){
       this.memberStore.page_block = page_block;
       this.getListOtherPage(1);
@@ -156,22 +110,76 @@ export default {
       this.getList();
     },
     removeAll(){
+      var checkList = [];
       this.listForTable.forEach((tr, idx) => {
         tr.forEach((td, idx) => {
           if(td.type === 'checkbox' && td.param.check){
-            console.log(td.param.member)
-            this.checkList.push({member:td.param.member})
+            checkList.push({member:td.param.member})
           }
         });
       });
+      if(checkList.length === 0){
+        alert('삭제할 회원을 확인해주세요.')
+        return;
+      }
+      this.memberStore.removeAll(checkList).then((resp) => {
+        if(resp.data.code === 200){
+          alert('삭제되었습니다.');
+          this.memberStore.header.forEach((h, idx) => {
+            if(h.type === 'checkbox'){
+              h.val = false;
+            }
+          });
+          this.getListOtherPage(1);
+        }
+      }).catch(err => { console.log("err", err); });
     },
-    updateStateAll(){
-      console.log(this.checkList);
-    }
+    approvePartnerAll(state){
+      var checkList = [];
+      this.listForTable.forEach((tr, idx) => {
+        var add = true;
+        var member = 0;
+        tr.forEach((td, idx) => {
+          if(td.type === 'checkbox'){
+            member = td.param.member;
+          }
+          if(td.type === 'checkbox' && !td.param.check){ // 체크 안된거 제외
+            add = false;
+          }
+          if(td.t === this.getNameFromValue(3, this.memberStore.state_name_value_list)){ // 완료 상태 제외
+            add = false;
+          }
+          if(td.t === this.getNameFromValue(4, this.memberStore.state_name_value_list)){ // 거절 상태 제외
+            add = false;
+          }
+        });
+        if(add){
+          checkList.push({member:member})
+        }
+      });
+      if(checkList.length === 0){
+        alert('승인할 회원을 확인해주세요.');
+        return;
+      }
+      this.memberStore.approvePartnerAll(state, checkList).then((resp) => {
+        if(resp.data.code === 200){
+          if(state === 3){
+            alert('승인되었습니다.');
+          } else {
+            alert('거절되었습니다.');
+          }
+          this.memberStore.header.forEach((h, idx) => {
+            if(h.type === 'checkbox'){
+              h.val = false;
+            }
+          });
+          this.getListOtherPage(1);
+        }
+      }).catch(err => { console.log("err", err); });
+    },
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn('member');
-    this.memberStore.page_block = this.page_block_list[0].value;
     this.getList();
   }
 }

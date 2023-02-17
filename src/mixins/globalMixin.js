@@ -32,6 +32,14 @@ export default {
       }
       return result;
     },
+    getFirstImageName: (data) => {
+      if (data !== "" && data !== "[]" && typeof data !== "undefined") {
+        let file = JSON.parse(data);
+        // console.log(file[index].path);
+        return file[0].name;
+      }
+      return "";
+    },
     isJsonString(str) {
       try {
         JSON.parse(str);

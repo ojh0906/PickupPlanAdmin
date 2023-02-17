@@ -5,7 +5,7 @@
       <tr class="table-head">
         <th :width="h.width" v-for="h in this.header">
           {{ h.title }}
-          <input type="checkbox" v-if="h.type === 'checkbox'" v-model="this.allCheck" @change="checkAll"/>
+          <input type="checkbox" v-if="h.type === 'checkbox'" v-model="h.val" @change="checkAll"/>
         </th>
       </tr>
       </thead>
@@ -38,10 +38,17 @@ export default {
   },
   methods: {
     checkAll(){
+      var allCheck = false;
+      this.header.forEach((h, idx) => {
+        if(h.type === 'checkbox'){
+          allCheck = h.val;
+        }
+      });
+
       this.list.forEach((tr, idx) => {
         tr.forEach((td, index) => {
           if(td.type === 'checkbox'){
-            td.param.check = this.allCheck;
+            td.param.check = allCheck;
           }
         });
       });
@@ -55,7 +62,12 @@ export default {
           }
         });
       });
-      this.allCheck = result;
+
+      this.header.forEach((h, idx) => {
+        if(h.type === 'checkbox'){
+          h.val = result;
+        }
+      });
     }
   },
   components: {
