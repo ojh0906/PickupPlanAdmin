@@ -741,6 +741,11 @@ input[type=checkbox] {
     background: #fff;
     width: 100px;
 }
+.contents-detail-container .info-container .more{
+    text-decoration: underline;
+    color: #8800FB !important;
+    cursor: pointer;
+}
 .contents-detail-container .tag-wrap{
     display: flex;
     justify-content: flex-start;
@@ -1043,7 +1048,177 @@ input[type=checkbox] {
 .boardDetail-container .b-list-wrap a span:nth-child(4){
     width: 70%;
 }
+.boardDetail-container .answer-wrap{
+    width: 100%;
+    margin-top: 30px;
+    border-top: 2px solid #000;
+    padding-top: 30px;
+}
+.boardDetail-container .answer-wrap span{
+    margin-right: 20px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.boardDetail-container .answer-wrap input[type=text]{
+    padding:10px 20px;
+    font-size: 15px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: #fff;
+    width: 800px;
+}
+.boardDetail-container .answer-wrap input[type=submit]{
+    color: #fff !important;
+    background: #8800FB;
+    border: 1px solid #8800FB;
+    border-radius: 3px;
+    padding: 8px 30px;
+    font-weight: 700;
+    margin-left: 30px;
+    cursor: pointer;
+    position: relative;
+    top: 2px;
+}
+.boardDetail-container .submit-wrap{
+    width: 100%;
+    margin-top: 60px;
+    text-align: center;
+}
+.boardDetail-container .submit-wrap span{
+    display: inline-block;
+    margin: 0 15px;
+    text-align: center;
+    color: #8800FB !important;
+    background: #fff;
+    border: 1px solid #8800FB;
+    font-weight: 700;
+    padding: 10px 50px;
+    border-radius: 10px;
+}
 
+/*  작성 페이지 공통  */
+.write-container{
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+.write-container .category-wrap {
+    margin-bottom: 30px;
+}
+.write-container .category-wrap select{
+    margin-right: 15px;
+}
+.write-container .input-wrap{
+    margin-bottom: 30px;
+    display: flex;
+}
+.write-container .input-wrap.input-double .input-wrap{
+    width: 50%;
+    margin-bottom: 0;
+}
+.write-container .input-wrap.input-double .input-wrap .label{
+    width: 30%;
+}
+.write-container .input-wrap.input-double .input-wrap input{
+    max-width: 200px;
+}
+
+.write-container .input-wrap .label{
+    width: 10%;
+    font-size: 16px;
+    font-weight: 700;
+}
+.write-container .input-wrap .input{
+    width: 90%;
+}
+.write-container .input-wrap-full{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.write-container input[type=text]{
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #fff;
+    color: #000;
+    border: 1px solid #7C7C7C;
+    border-radius: 10px;
+}
+.write-container input[type=file]{
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #7C7C7C;
+    border-radius: 10px;
+}
+.write-container input[type=file]:nth-last-child(1){
+    margin-bottom: 0;
+}
+.write-container input[type=text]::placeholder{
+    color: #7C7C7C;
+}
+.write-container .input-wrap .input .select-btn{
+    font-size: 15px;
+    padding: 10px 0;
+    width: 120px;
+    margin-right: 15px;
+    display: inline-block;
+    border: 1px solid #7C7C7C;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.write-container .input-wrap .input .select-btn.selected{
+    color: #fff !important;
+    background: #8800FB;
+    border: 1px solid #8800FB;
+    font-weight: 700;
+}
+.write-container textarea{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #fff;
+    color: #000;
+    border: 1px solid #7C7C7C;
+    border-radius: 10px;
+    resize: none;
+    width: 100%;
+    height: 250px;
+}
+.write-container select{
+    padding: 5px 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: #fff;
+    color: #000;
+    border: 1px solid #7C7C7C;
+    border-radius: 10px;
+}
+.write-container .input-wrap .input.date select{
+    margin: 0 10px 0 10px;
+}
+.write-container .input-wrap .input.date .gap{
+    margin: 0 20px;
+}
+.write-container .submit-wrap{
+    width: 100%;
+    margin-top: 60px;
+    text-align: center;
+}
+.write-container .submit-wrap span{
+    display: inline-block;
+    margin: 0 15px;
+    text-align: center;
+    color: #8800FB !important;
+    background: #fff;
+    border: 1px solid #8800FB;
+    font-weight: 700;
+    padding: 10px 50px;
+    border-radius: 10px;
+}
     /*  검색 레이아웃  */
 .main-container .top-container .search-container{
     float: right;
@@ -1082,6 +1257,72 @@ input[type=checkbox] {
     padding: 9px;
     vertical-align: middle;
 }
+/*  기획전 상세  */
+.exhibition-detail-container{
+    padding:40px 0 100px;
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+}
+.exhibition-detail-container .info-text{
+    font-size: 25px;
+    text-align: center;
+}
+.exhibition-detail-container .info-text strong{
+    font-size: 25px;
+    color: #8800FB !important;
+}
+.exhibition-detail-container .title-wrap{
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+}
+.exhibition-detail-container .title-wrap .regdate{
+    width: 15%;
+    text-align: center;
+    font-size: 20px;
+}
+.exhibition-detail-container .title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+.exhibition-detail-container table{
+    width: 900px;
+    margin: 30px auto 20px;
+    border: 1px solid #000;
+}
+.exhibition-detail-container table td{
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #000;
+}
+.exhibition-detail-container table a{
+    text-decoration: underline;
+}
+.exhibition-detail-container .tag{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 700;
+}
+.exhibition-detail-container .submit{
+    background: #8800FB ;
+    padding: 15px 20px;
+    width: 200px;
+    box-sizing: border-box;
+    color: #fff !important;
+    border-radius: 10px;
+    text-align: center;
+    display: block;
+    margin: 50px auto;
+    font-weight: 700;
+    cursor: pointer;
+}
 
 
     /*    Modal    */
@@ -1115,6 +1356,10 @@ input[type=checkbox] {
     text-align: center;
     font-weight: 700;
     font-size: 18px;
+}
+.modal .modal-head .title strong{
+    font-size: 18px;
+    color: #8800FB !important;
 }
 .contents-modal .search-wrap{
     position: relative;
@@ -1190,4 +1435,33 @@ input[type=checkbox] {
     color: #fff !important;
     font-weight: 700;
     font-size: 18px;
+}
+.exhibition-modal table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+.exhibition-modal table th{
+    padding: 15px 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    border-bottom: 1px solid #000;
+
+}
+.exhibition-modal table td{
+    padding: 15px 0;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    font-size: 16px;
+}
+.exhibition-modal table .btn{
+    background: #8800FB;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    color: #fff !important;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
 }

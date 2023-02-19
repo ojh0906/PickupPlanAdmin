@@ -25,7 +25,7 @@ export default {
   methods: {
   },
   created() {
-    this.$parent.$parent.$refs.gnb.setGnbInfo(2);
+    this.$parent.$parent.$refs.gnb.activeBtn("board");
   }
 }
 </script>

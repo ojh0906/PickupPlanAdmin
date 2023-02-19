@@ -23,7 +23,9 @@
           </div>
         </div>
         <div class="board-filter-right-wrap">
-          <span class="edit-btn">등록 하기</span>
+          <router-link :to="{ name: 'ExhibitionWrite', query: {} }" class="edit-btn" >
+            작성 하기
+          </router-link>
         </div>
         <div class="table-wrap">
           <table>
@@ -51,7 +53,7 @@
                 00명
               </td>
               <td>
-<!--                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>-->
+                <router-link :to="{ name: 'ExhibitionDetail', query: {} }" class="view-detail" >상세보기</router-link>
               </td>
             </tr>
             </tbody>

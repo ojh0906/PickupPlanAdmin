@@ -51,7 +51,7 @@
                 문의사항의 제목이 노출되는 영역입니다.
               </td>
               <td>
-<!--                <router-link :to="{ name: 'PartnerDetail', query: {} }" class="view-detail" >상세보기</router-link>-->
+                <router-link :to="{ name: 'ContactDetail', query: {} }" class="view-detail" >상세보기</router-link>
               </td>
             </tr>
             </tbody>

@@ -29,7 +29,7 @@
                     강사목록
                 </td>
                 <td>
-
+                  <span class="more">목록보기</span>
                 </td>
               </tr>
               <tr>
@@ -184,6 +184,9 @@
 
   </div>
 </template>
+
+
+
 <script>
 import Header from '/src/components/common/Header.vue';
 
