@@ -33,10 +33,12 @@
             </div>
           </div>
         </div>
-        <div class="board-filter-right-wrap">
+        <div class="board-btn-wrap">
           <router-link :to="{ name: 'BoardWrite', query: {} }" class="edit-btn" >
             작성 하기
           </router-link>
+        </div>
+        <div class="board-filter-right-wrap">
           <select>
             <option>10개씩 보기</option>
             <option>5개씩 보기</option>
