@@ -95,8 +95,9 @@ export default {
         td_data.push({t:'', class:'', type:'checkbox', param:{check:false, project:project.project}});
         td_data.push({t:this.formattedDate(project.regdate,'YY.MM.DD'), class:'bold', type:'text', param:{}});
         td_data.push({t:project.title, class:'bold', type:'text', param:{}});
-        td_data.push({t:project.title, class:'bold', type:'text', param:{}});
+        td_data.push({t:project.apply_cnt + '명', class:'bold', type:'text', param:{}});
         td_data.push({t:'', class:'', type:'link', param:{link:[{text:'상세보기', href:'ExhibitionDetail', key:project.project}]}});
+        td_data.push({t:'', class:'', type:'button', param:{func:[{text:'수정하기', key:project.project, store:this.projectStore, value:function(key){this.store.goToProjectModify(key);}},]}});
         this.listForTable.push(td_data);
       });
     },

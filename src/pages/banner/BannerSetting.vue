@@ -38,11 +38,11 @@
             <td colspan="3">
               <span class="add-file" @click="addFiles(this.$refs.images_new);" v-if="(this.images_new.length + this.images.length) === 0">파일 추가</span>
               <input type="file" ref="images_new" v-on:change="handleUpload(this.$refs.images_new.files, this.images_new)" class="hidden" style="display: none;" accept="image/*"/>
-              <div class="file-list" v-for="(file, index) in this.images_new" :key="index">
-                <span>{{ file.name }}<i class="fas fa-times" @click="removeFile(this.images_new, key)"></i></span>
+              <div class="file-list" v-for="(file, index) in this.images">
+                <span>{{ file.name }}<i class="fas fa-times" @click="removeFile(this.images, index)"></i></span>
               </div>
-              <div class="file-list" v-for="(file, index) in this.images" :key="index">
-                <span>{{ file.name }}<i class="fas fa-times" @click="removeFile(this.images, key)"></i></span>
+              <div class="file-list" v-for="(file, index) in this.images_new">
+                <span>{{ file.name }}<i class="fas fa-times" @click="removeFile(this.images_new, index)"></i></span>
               </div>
             </td>
           </tr>

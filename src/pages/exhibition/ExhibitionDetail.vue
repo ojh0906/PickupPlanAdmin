@@ -24,11 +24,11 @@
               </tr>
               <tr>
                 <td>모집 현황</td>
-                <td>00명 / {{ this.projectStore.project.total }} 명</td>
+                <td>{{ this.projectStore.project.apply_cnt }} 명 / {{ this.projectStore.project.total }} 명</td>
               </tr>
               <tr>
                 <td>카테고리</td>
-                <td>{{ this.projectStore.project.category }}</td>
+                <td>{{ this.getNameFromValue(this.projectStore.project.category, this.projectStore.category_name_value_list) }}</td>
               </tr>
               <tr>
                 <td>유료/무료</td>

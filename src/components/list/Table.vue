@@ -17,7 +17,7 @@
             {{ link.text }}
           </router-link>
           <input type="checkbox" v-if="data.type === 'checkbox'" v-model="data.param.check" @change="checkState"/>
-          <span class="btn" v-if="data.type === 'button'" v-for=" func in data.param.func" @click="func.value(func.key)">{{func.text}}</span>
+          <span class="btn view-detail" v-if="data.type === 'button'" v-for=" func in data.param.func" @click="func.value(func.key)">{{func.text}}</span>
         </td>
       </tr>
       </tbody>

@@ -21,7 +21,7 @@ export default {
     },
     formattedDate(value, format = "YYYY.MM.DD") {
       dayjs.locale('ko');
-      return dayjs(value).add(-9,'h').format(format);
+      return dayjs(value).format(format);
     },
     getNameFromValue(value, nameValueList){
       var result = 'error';

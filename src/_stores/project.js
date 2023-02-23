@@ -9,7 +9,8 @@ const header = [
   {title:'작성일', width:'15%'},
   {title:'제목', width:'30%'},
   {title:'모집현황', width:'20%'},
-  {title:'', width:'20%'},
+  {title:'', width:'10%'},
+  {title:'', width:'10%'},
 ];
 const search_type_list = [
   { text: '제목', value: 'title'},
@@ -127,7 +128,11 @@ export const useProjectStore = defineStore({
     },
     // 수정
     async modify(id, params) {
-      return await http.put(`${baseUrl}/${id}`, params);
+      return await http.put(`${baseUrl}/${id}`, params, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
     },
     // 삭제
     async removeApply(id) {
@@ -139,6 +144,9 @@ export const useProjectStore = defineStore({
     },
     goToMemberDetail(key){
       router.push({name:'MemberDetail', query: {key:key }});
+    },
+    goToProjectModify(key){
+      router.push({name:'ExhibitionWrite', query: {key:key }});
     }
   },
 });

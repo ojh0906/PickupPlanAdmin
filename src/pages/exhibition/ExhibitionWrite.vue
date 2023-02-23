@@ -19,9 +19,13 @@
           <div class="input">
             <span class="add-file" @click="addFiles(this.$refs.files_new)">파일 추가</span>
             <input type="file" ref="files_new" multiple v-on:change="handleUpload(this.$refs.files_new.files, this.files_new)" class="hidden" style="display: none;" accept="image/*"/>
-            <div v-for="(file, index) in this.files_new" :key="index" class="upload-list">
+            <div v-for="(file, index) in this.files" class="upload-list">
               <span class="file_name">{{ file.name }}</span>
-              <span class="remove-file" @click="removeFile(this.files_new, key)">삭제</span>
+              <span class="remove-file" @click="removeFileAdd(this.files, index, file)">삭제</span>
+            </div>
+            <div v-for="(file, index) in this.files_new" class="upload-list">
+              <span class="file_name">{{ file.name }}</span>
+              <span class="remove-file" @click="removeFile(this.files_new, index)">삭제</span>
             </div>
           </div>
         </div>
@@ -30,11 +34,15 @@
             썸네일
           </div>
           <div class="input">
-            <span class="add-file" @click="addFiles(this.$refs.thumb_new);" v-if="this.thumb_new.length === 0">파일 추가</span>
+            <span class="add-file" @click="addFiles(this.$refs.thumb_new);" v-if="(this.thumb_new.length + this.thumb.length) === 0">파일 추가</span>
             <input type="file" ref="thumb_new" v-on:change="handleUpload(this.$refs.thumb_new.files, this.thumb_new)" class="hidden" style="display: none;" accept="image/*"/>
-            <div v-for="(file, index) in this.thumb_new" :key="index" class="upload-list">
+            <div v-for="(file, index) in this.thumb" class="upload-list">
               <span class="file_name">{{ file.name }}</span>
-              <span class="remove-file" @click="removeFile(this.thumb_new, key)">삭제</span>
+              <span class="remove-file" @click="removeFile(this.thumb, index)">삭제</span>
+            </div>
+            <div v-for="(file, index) in this.thumb_new" class="upload-list">
+              <span class="file_name">{{ file.name }}</span>
+              <span class="remove-file" @click="removeFile(this.thumb_new, index)">삭제</span>
             </div>
           </div>
         </div>
@@ -112,8 +120,8 @@
           </div>
         </div>
         <div class="submit-wrap">
-          <span @click="submit">완료</span>
-          <span>취소</span>
+          <span @click="submit">{{ this.project === 0 ? '완료':'수정' }}</span>
+          <span @click="goToProjectList">취소</span>
         </div>
       </div>
     </div>
@@ -136,6 +144,7 @@ export default {
   },
   data() {
     return{
+      project:0,
       title:'',
       content:'',
       start:'',
@@ -157,6 +166,7 @@ export default {
       end_year:(new Date()).getFullYear(),
       end_month:1,
       end_day:1,
+      files_del:[],
     }
   },
   watch:{
@@ -167,6 +177,31 @@ export default {
     },
   },
   methods: {
+    initProject(){
+      this.project = 0;
+      this.title = '';
+      this.content = '';
+      this.start = '';
+      this.end = '';
+      this.total = '0';
+      this.category = this.projectStore.category_name_value_list[0].value;
+      this.free = false;
+      this.tagStr = '';
+      this.tags = [];
+      this.files = [];
+      this.thumb = [];
+      this.tagList = [];
+      this.files_new = [];
+      this.thumb_new = [];
+      this.thisYear = (new Date()).getFullYear();
+      this.start_year = (new Date()).getFullYear();
+      this.start_month = 1;
+      this.start_day = 1;
+      this.end_year = (new Date()).getFullYear();
+      this.end_month = 1;
+      this.end_day = 1;
+      this.files_del = [];
+    },
     addFiles(target, type){
       target.click();
       if(type === 1){
@@ -184,8 +219,51 @@ export default {
     removeFile(fileList, key) {
       fileList.splice(key, 1);
     },
+    removeFileAdd(fileList, key, file) {
+      fileList.splice(key, 1);
+      this.files_del.push(file);
+    },
     checkLeap(year){
       return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+    },
+    getDetail(){
+      this.projectStore.getById(this.project).then((resp) => {
+        this.project = this.projectStore.project.project;
+        this.title = this.projectStore.project.title;
+        this.content = this.projectStore.project.content;
+        this.start = this.formattedDate(this.projectStore.project.start,'YYYYMMDD');
+        this.end = this.formattedDate(this.projectStore.project.end,'YYYYMMDD');
+        this.total = this.projectStore.project.total+'';
+        this.category = this.projectStore.project.category;
+        this.free = this.projectStore.project.free;
+        this.tagStr = this.projectStore.project.tagStr;
+        this.files = JSON.parse(this.projectStore.project.files);
+        this.thumb = JSON.parse(this.projectStore.project.thumb);
+        this.tagList = [];
+        this.files_new = [];
+        this.thumb_new = [];
+        this.files_del = [];
+        this.thisYear = (new Date()).getFullYear();
+        this.start_year = this.start.substring(0,4);
+        this.start_month = Number(this.start.substring(4,6)).toString();
+        this.start_day = Number(this.start.substring(6,8)).toString();
+        this.end_year = this.end.substring(0,4);
+        this.end_month = Number(this.end.substring(4,6)).toString();
+        this.end_day = Number(this.end.substring(6,8)).toString();
+        this.getTags(this.project);
+      }).catch(err => { console.log("err", err); });
+    },
+    getTags(key){
+      this.projectStore.getTags(key).then((resp) => {
+        this.tags = this.projectStore.project.tags;
+        this.tagStr = '';
+        this.tags.forEach((tag,index) => {
+          if(index !== 0){
+            this.tagStr += ','
+          }
+          this.tagStr += tag.value;
+        })
+      }).catch(err => { console.log("err", err); });
     },
     submit(){
       // 태그리스트 값 셋팅
@@ -220,17 +298,37 @@ export default {
         formData.append('thumb_new', this.thumb_new[i]);
       }
 
-      this.projectStore.save(formData).then((resp) => {
-        console.log(resp);
-        if(resp.data.code === 200){
-          alert('등록되었습니다.');
-          this.$router.push({name:'ExhibitionList'})
+      if(this.project === 0){
+        this.projectStore.save(formData).then((resp) => {
+          if(resp.data.code === 200){
+            alert('등록되었습니다.');
+            this.goToProjectList();
+          }
+        }).catch(err => { console.log("err", err); });
+      } else {
+        if(this.files_del.length !== 0){
+          formData.append("files_del", JSON.stringify(this.files_del));
         }
-      }).catch(err => { console.log("err", err); });
+        this.projectStore.modify(this.project, formData).then((resp) => {
+          if(resp.data.code === 200){
+            alert('수정되었습니다.');
+            this.goToProjectList();
+          }
+        }).catch(err => { console.log("err", err); });
+      }
+    },
+    goToProjectList(){
+      this.$router.push({name:'ExhibitionList'});
     }
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("exhibition");
+    if(this.$route.query.key != null){
+      this.project = this.$route.query.key;
+      this.getDetail();
+    } else {
+      this.initProject();
+    }
   }
 }
 </script>
