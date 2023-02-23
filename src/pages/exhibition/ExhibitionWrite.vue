@@ -17,9 +17,9 @@
             첨부파일
           </div>
           <div class="input">
-            <span class="add-img" @click="addFiles(this.$refs.files_new)">추가</span>
+            <span class="add-file" @click="addFiles(this.$refs.files_new)">파일 추가</span>
             <input type="file" ref="files_new" multiple v-on:change="handleUpload(this.$refs.files_new.files, this.files_new)" class="hidden" style="display: none;" accept="image/*"/>
-            <div v-for="(file, index) in this.files_new" :key="index">
+            <div v-for="(file, index) in this.files_new" :key="index" class="upload-list">
               <span class="file_name">{{ file.name }}</span>
               <span class="remove-file" @click="removeFile(this.files_new, key)">삭제</span>
             </div>
@@ -30,9 +30,9 @@
             썸네일
           </div>
           <div class="input">
-            <span class="add-img" @click="addFiles(this.$refs.thumb_new);" v-if="this.thumb_new.length === 0">추가</span>
+            <span class="add-file" @click="addFiles(this.$refs.thumb_new);" v-if="this.thumb_new.length === 0">파일 추가</span>
             <input type="file" ref="thumb_new" v-on:change="handleUpload(this.$refs.thumb_new.files, this.thumb_new)" class="hidden" style="display: none;" accept="image/*"/>
-            <div v-for="(file, index) in this.thumb_new" :key="index">
+            <div v-for="(file, index) in this.thumb_new" :key="index" class="upload-list">
               <span class="file_name">{{ file.name }}</span>
               <span class="remove-file" @click="removeFile(this.thumb_new, key)">삭제</span>
             </div>
