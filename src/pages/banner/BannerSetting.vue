@@ -38,7 +38,7 @@
           <tr>
             <td class="title">이미지 등록</td>
             <td colspan="3">
-              <input type="file">
+              <span class="add-file">파일 추가</span>
               <div class="file-list">
                 <span>배너1.jpg <i class="fas fa-times"></i></span>
               </div>

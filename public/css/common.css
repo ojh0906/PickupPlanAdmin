@@ -965,6 +965,18 @@ input[type=checkbox] {
     box-sizing: border-box;
     font-size: 16px;
 }
+.bannerSetting-container table .add-file{
+    display: inline-block;
+    text-align: center;
+    color: #8800FB !important;
+    background: #fff;
+    border: 1px solid #8800FB;
+    font-weight: 700;
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size:15px;
+    cursor: pointer;
+}
 .bannerSetting-container table select{
     font-weight: 400;
     font-size: 14px;
@@ -989,15 +1001,16 @@ input[type=checkbox] {
     color: #000;
     border: none;
     outline: none;
+    margin-right: 20px;
 }
 .bannerSetting-container table .file-list{
     display: inline-block;
 }
 .bannerSetting-container table .file-list span{
-
 }
 .bannerSetting-container table .file-list i{
     cursor: pointer;
+    margin-left: 10px;
 }
 .bannerSetting-container .submit-wrap{
     width: 100%;
@@ -1215,10 +1228,10 @@ input[type=checkbox] {
     border-radius: 10px;
     font-size:15px;
     cursor: pointer;
+    margin-bottom: 15px;
+
 }
 .write-container .upload-list{
-    margin-top: 15px;
-    padding-lett:20px;
 }
 .write-container .upload-list .remove-file{
     margin-left: 10px;
@@ -1369,6 +1382,7 @@ input[type=checkbox] {
 }
 .exhibition-detail-container table a{
     text-decoration: underline;
+    display: block;
 }
 .exhibition-detail-container .tag{
     text-align: center;
