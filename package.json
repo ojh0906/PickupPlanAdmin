@@ -15,7 +15,10 @@
     "vue": "^3.2.37",
     "vue-router": "^4.1.3",
     "dayjs": "^1.10.7",
-    "vue3-summernote-editor": "^1.0.2"
+    "vue3-summernote-editor": "^1.0.2",
+    "v-calendar": "^3.0.0-alpha.8",
+    "vee-validate": "^4.7.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.0",

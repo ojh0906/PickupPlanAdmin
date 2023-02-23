@@ -86,7 +86,6 @@ export const useMemberStore = defineStore({
       try {
         await http.get(`${baseUrl}/${id}`).then(resp => {
           if (resp.data.code === 200) {
-            console.log(resp)
             this.member = resp.data.body;
           }
         });
@@ -97,8 +96,8 @@ export const useMemberStore = defineStore({
     async removeAll(memberList) {
       return await http.post(`${baseUrl}/remove`, { removeMemberList: memberList })
     },
-    async approvePartnerAll(state, memberList) {
-      return await http.post(`${baseUrl}/state`, { state:state, modifyMemberList: memberList })
+    async approvePartnerAll(state, checkList) {
+      return await http.post(`${baseUrl}/state`, { state:state, modifyMemberList: checkList })
     },
   },
 });

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { http } from '@/_services';
 import router from '@/_router';
+import dayjs from 'dayjs';
 
 const baseUrl = `/admin`;
 
@@ -10,6 +11,7 @@ export const useAuthStore = defineStore({
         // initialize state from local storage to enable user to stay logged in
         member: {},
         auth_token: "",
+        expiryTime: "",
         isAuthenticated: false,
         return_url: null
     }),
@@ -23,6 +25,7 @@ export const useAuthStore = defineStore({
                         delete this.member.password;
                         this.auth_token = resp.data.body.token;
                         this.isAuthenticated = true;
+                        this.expiryTime = dayjs(new Date()).add(resp.data.body.expiryHour, 'hour').format('YYYY-MM-DD HH:mm:ss');
                         router.push(this.return_url || '/');
                     }else{
                         return resp;
@@ -37,8 +40,9 @@ export const useAuthStore = defineStore({
         logout() {
             this.member = {};
             this.auth_token = "";
+            this.expiryTime = "";
             this.isAuthenticated = false;
-            router.push('/');
+            router.push('/login');
         }
     },
     persist: true,

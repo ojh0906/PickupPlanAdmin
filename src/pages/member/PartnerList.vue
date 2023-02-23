@@ -92,7 +92,7 @@ export default {
         td_data.push({t:member.id, class:'bold', type:'text', param:{}});
         td_data.push({t:member.phone, class:'', type:'text', param:{}});
         td_data.push({t:member.email, class:'blue-text', type:'text', param:{}});
-        td_data.push({t:'', class:'', type:'button', param:{link:[{text:'상세보기', href:'MemberDetail', key:member.member}]}});
+        td_data.push({t:'', class:'', type:'link', param:{link:[{text:'상세보기', href:'MemberDetail', key:member.member}]}});
         this.listForTable.push(td_data);
       });
     },
@@ -180,7 +180,7 @@ export default {
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn('member');
-    this.getList();
+    this.getListAfterChangingPageBlock(this.memberStore.page_block_list[0].value);
   }
 }
 </script>

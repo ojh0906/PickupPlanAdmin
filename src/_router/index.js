@@ -13,6 +13,7 @@ import Login from "/src/pages/Login.vue";
 
 import {useRouteHistoryStore} from '@/_stores/route_history'
 import {useAuthStore} from '@/_stores';
+import dayjs from 'dayjs';
 
 const routes = [
     { path: "/login", name:"Login", component: Login }, // 비로그인 시 해당 페이지로 라우팅
@@ -53,6 +54,11 @@ router.beforeEach(async (to) => {
 
 // save history stack
 router.afterEach((to, from, failure) => {
-    const route_history = useRouteHistoryStore()
-    route_history.push(from.path)
+    const authStore = useAuthStore();
+    const isExpiryAuth = dayjs().isAfter(authStore.expiryTime);
+
+    if (isExpiryAuth) {
+        alert("로그인이 만료되었습니다.");
+        authStore.logout();
+    }
 })

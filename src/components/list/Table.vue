@@ -13,10 +13,11 @@
       <tr v-for="td in this.list">
         <td :class="data.class" v-for="data in td">
           {{ data.t }}
-          <router-link :to="{ name: link.href, query: {key:link.key } }" class="view-detail" v-if="data.type === 'button'" v-for=" link in data.param.link">
+          <router-link :to="{ name: link.href, query: {key:link.key } }" class="view-detail" v-if="data.type === 'link'" v-for=" link in data.param.link">
             {{ link.text }}
           </router-link>
           <input type="checkbox" v-if="data.type === 'checkbox'" v-model="data.param.check" @change="checkState"/>
+          <span class="btn" v-if="data.type === 'button'" v-for=" func in data.param.func" @click="func.value(func.key)">{{func.text}}</span>
         </td>
       </tr>
       </tbody>

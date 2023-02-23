@@ -1380,10 +1380,8 @@ input[type=checkbox] {
     opacity: 0.5;
     top: 0;
     right: 0;
-    display: none;
 }
 .modal{
-    display: none;
     position: fixed;
     width: 1100px;
     left: calc(50% - 400px);
@@ -1501,6 +1499,7 @@ input[type=checkbox] {
     font-size: 16px;
 }
 .exhibition-modal table .btn{
+    margin-right: 10px;
     background: #8800FB;
     padding: 10px 20px;
     box-sizing: border-box;
