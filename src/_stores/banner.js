@@ -1,46 +1,33 @@
 import {defineStore} from "pinia";
 import {http} from "@/_services";
 
-const baseUrl = `/admin/member`;
+const baseUrl = `/admin/banner`;
 
 const header = [
   {title:'', width:'3%', type:'checkbox', val:false},
-  {title:'구분', width:'5%'},
-  {title:'상태', width:'5%'},
-  {title:'가입일', width:'10%'},
-  {title:'아이디', width:'15%'},
-  {title:'연락처', width:'15%'},
-  {title:'이메일', width:'15%'},
+  {title:'타입', width:'15%'},
+  {title:'노출순서', width:'25%'},
+  {title:'배너명', width:'40%'},
   {title:'', width:'20%'},
 ];
 const search_type_list = [
-  { text: '아이디', value: 'id'},
-  { text: '이메일', value: 'email'},
+  { text: '배너명', value: 'name'},
 ];
 const page_block_list = [
   { text: '10개씩 보기', value: 10},
   { text: '5개씩 보기', value: 5},
 ];
 const type_name_value_list = [
-  { name: '일반', value: 1},
-  { name: '강사', value: 2},
-  { name: '파트너', value: 3},
-];
-const state_name_value_list = [
-  { name: '강사 신청', value: 1},
-  { name: '파트너 신청', value: 2},
-  { name: '완료', value: 3},
-  { name: '거절', value: 4},
+  { name: '메인', value: 1},
 ];
 
-export const useMemberStore = defineStore({
-  id: "member",
+export const useBannerStore = defineStore({
+  id: "banner",
   state: () => ({
     header:header,
     search_type_list:search_type_list,
     page_block_list:page_block_list,
     type_name_value_list:type_name_value_list,
-    state_name_value_list:state_name_value_list,
     page:1,
     page_block:page_block_list[0].value,
     num_block:10,
@@ -48,23 +35,22 @@ export const useMemberStore = defineStore({
     start_page:999999,
     end_page:999999,
     pagesList:[],
-    member_list: [],
-    member_list_total:0,
-    member: {},
-    partner: {},
+    banner_list: [],
+    banner_list_total:0,
+    banner: {},
   }),
   actions: {
     async getAll(params) {
       try {
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.member_list = [];
+          this.banner_list = [];
           if (resp.data.code === 200) {
-            this.member_list = resp.data.body;
-            this.member_list_total = resp.data.total;
+            this.banner_list = resp.data.body;
+            this.banner_list_total = resp.data.total;
             //console.log("get member_list", resp.data)
 
             // 페이징 셋팅
-            this.endPage = Math.ceil(this.member_list_total / this.page_block)
+            this.endPage = Math.ceil(this.banner_list_total / this.page_block)
             this.pagesList = [];
 
             this.start_page = (Math.ceil(this.page / this.num_block) - 1) * this.num_block + 1;
@@ -86,18 +72,31 @@ export const useMemberStore = defineStore({
       try {
         await http.get(`${baseUrl}/${id}`).then(resp => {
           if (resp.data.code === 200) {
-            this.member = resp.data.body;
+            this.banner = resp.data.body;
           }
         });
       } catch (error) {
         console.log(error)
       }
     },
-    async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeMemberList: checkList })
+    // 저장
+    async save(params) {
+      return await http.post(`${baseUrl}/save`, params, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
     },
-    async approvePartnerAll(state, checkList) {
-      return await http.post(`${baseUrl}/state`, { state:state, modifyMemberList: checkList })
+    // 수정
+    async modify(id, params) {
+      return await http.put(`${baseUrl}/${id}`, params, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+    },
+    async removeAll(checkList) {
+      return await http.post(`${baseUrl}/remove`, { removeBannerList: checkList })
     },
   },
 });

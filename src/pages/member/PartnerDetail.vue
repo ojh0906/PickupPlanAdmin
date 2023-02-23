@@ -206,9 +206,11 @@ export default {
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn('member');
-    if(this.$route.query.key != 0){
+    if(this.$route.query.key != null){
       this.member = this.$route.query.key;
       this.getDetail();
+    } else {
+      alert('잘못된 접근입니다.');
     }
   }
 }

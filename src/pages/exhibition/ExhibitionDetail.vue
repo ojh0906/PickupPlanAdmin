@@ -141,7 +141,7 @@ export default {
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("exhibition");
-    if(this.$route.query.key != 0){
+    if(this.$route.query.key != null){
       this.project = this.$route.query.key;
       this.getDetail();
     } else {

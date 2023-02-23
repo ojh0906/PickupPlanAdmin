@@ -141,7 +141,7 @@ export default {
       start:'',
       end:'',
       total:0,
-      category:'',
+      category:this.projectStore.category_name_value_list[0].value,
       free:false,
       tagStr:'',
       tags:[],
