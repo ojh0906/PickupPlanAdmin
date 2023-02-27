@@ -87,7 +87,7 @@ export default {
   methods: {
     initBanner(){
       this.banner = 0;
-      this.type = 1;
+      this.type = this.bannerStore.type_name_value_list[0].value;
       this.sort = 1;
       this.name = '';
       this.link = '';

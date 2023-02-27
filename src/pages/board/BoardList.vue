@@ -4,83 +4,30 @@
     <div class="main-container">
       <div class="top-container">
         <span class="tit">게시판 관리</span>
-        <div class="search-container">
-          <form>
-            <select>
-              <option>유저번호</option>
-              <option>핸드폰 번호</option>
-              <option>닉네임</option>
-            </select>
-            <input type="text" placeholder="검색어 입력" />
-            <span class="search-icon">
-              <i class="fas fa-search"></i>
-            </span>
-          </form>
-        </div>
+        <!-- 검색 -->
+        <Search :search_type_list="this.boardStore.search_type_list" @getListAfterSearching="getListAfterSearching"/>
       </div>
 
       <div class="board-container">
         <div class="board-filter-wrap">
           <div class="filter-container">
             <div class="filter-wrap">
-              <p class="label active">
-                <span class="filter-chk"></span>
-                전체 선택
-              </p>
-            </div>
-            <div class="filter-wrap">
-              <p class="button">선택 삭제</p>
+              <p class="button" @click="removeAll">선택 삭제</p>
             </div>
           </div>
         </div>
+        <Filter :page_block_list="this.boardStore.page_block_list" @getListAfterChangingPageBlock="getListAfterChangingPageBlock"/>
         <div class="board-btn-wrap">
           <router-link :to="{ name: 'BoardWrite', query: {} }" class="edit-btn" >
             작성 하기
           </router-link>
         </div>
-        <div class="board-filter-right-wrap">
-          <select>
-            <option>10개씩 보기</option>
-            <option>5개씩 보기</option>
-          </select>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-            <tr class="table-head">
-              <th width="3%"></th>
-              <th width="15%">구분</th>
-              <th width="25%">작성일</th>
-              <th width="40%">제목</th>
-              <th width="20%"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <input type="checkbox" />
-              </td>
-              <td>
-                파트너
-              </td>
-              <td class="">
-                22.07.31
-              </td>
-              <td>
-                문의사항의 제목이 노출되는 영역입니다.
-              </td>
-              <td>
-                <router-link :to="{ name: 'BoardDetail', query: {} }" class="view-detail" >상세보기</router-link>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="paging-wrap">
-          <a class="active">1</a>
-          <a>2</a>
-          <a>3</a>
-        </div>
+
+        <!-- 리스트 영역 -->
+        <Table :header="this.boardStore.header" :list="this.listForTable" />
+
+        <!-- 페이징 -->
+        <Page :storeInfo="this.boardStore" @getListOtherPage="getListOtherPage"/>
       </div>
 
     </div>
@@ -88,22 +35,110 @@
 
 </template>
 <script>
-import Header from '/src/components/common/Header.vue';
+import Header from '@/components/common/Header.vue';
+import Table from "@/components/list/Table.vue";
+import Page from "@/components/list/Page.vue";
+import Search from "@/components/list/Search.vue";
+import Order from "@/components/list/Order.vue";
+import Filter from "@/components/list/Filter.vue";
+import {useBoardStore} from '@/_stores';
 
 export default {
   components: {
     Header,
+    Table,
+    Page,
+    Search,
+    Order,
+    Filter,
+  },
+  setup(){
+    const boardStore = useBoardStore();
+    return {
+      boardStore,
+    }
   },
   data() {
-
+    return{
+      listForTable:[],
+      searchType:'',
+      searchKeyword:'',
+    }
   },
   watch:{
 
   },
   methods: {
+    getList(){
+      let params = {
+        page: this.boardStore.page,
+        page_block: this.boardStore.page_block,
+      }
+
+      if(this.searchKeyword !== ''){
+        params.searchType = this.searchType;
+        params.searchKeyword = this.searchKeyword;
+      }
+
+      this.boardStore.getAll(params).then(() => {
+        this.setListForTable();
+      }).catch(err => { console.log("err", err); });
+    },
+    setListForTable(){
+      this.listForTable = [];
+      this.boardStore.board_list.forEach((board, idx) => {
+        let td_data = [];
+        td_data.push({t:'', class:'', type:'checkbox', param:{check:false, board:board.board}});
+        td_data.push({t:this.getNameFromValue(board.type, this.boardStore.type_name_value_list), class:'', type:'text', param:{}});
+        td_data.push({t:this.formattedDate(board.regdate), class:'', type:'text', param:{}});
+        td_data.push({t:board.title, class:'', type:'text', param:{}});
+        td_data.push({t:'', class:'', type:'link', param:{link:[{text:'상세보기', href:'BoardDetail', key:board.board}]}});
+        td_data.push({t:'', class:'', type:'button', param:{func:[{text:'수정하기', key:board.board, store:this.boardStore, value:function(key){this.store.goToBoardModify(key);}},]}});
+        this.listForTable.push(td_data);
+      });
+    },
+    getListAfterSearching(searchType, searchKeyword){
+      this.searchType = searchType;
+      this.searchKeyword = searchKeyword;
+      this.getListOtherPage(1);
+    },
+    getListAfterChangingPageBlock(page_block){
+      this.boardStore.page_block = page_block;
+      this.getListOtherPage(1);
+    },
+    getListOtherPage(page){
+      this.boardStore.page = page;
+      this.getList();
+    },
+    removeAll(){
+      var checkList = [];
+      this.listForTable.forEach((tr, idx) => {
+        tr.forEach((td, idx) => {
+          if(td.type === 'checkbox' && td.param.check){
+            checkList.push({board:td.param.board})
+          }
+        });
+      });
+      if(checkList.length === 0){
+        alert('삭제할 게시글을 확인해주세요.')
+        return;
+      }
+      this.boardStore.removeAll(checkList).then((resp) => {
+        if(resp.data.code === 200){
+          alert('삭제되었습니다.');
+          this.boardStore.header.forEach((h, idx) => {
+            if(h.type === 'checkbox'){
+              h.val = false;
+            }
+          });
+          this.getListOtherPage(1);
+        }
+      }).catch(err => { console.log("err", err); });
+    },
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("board");
+    this.getListAfterChangingPageBlock(this.boardStore.page_block_list[0].value);
   }
 }
 </script>

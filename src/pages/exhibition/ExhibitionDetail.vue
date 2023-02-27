@@ -134,10 +134,6 @@ export default {
         });
       }
     },
-    test(key){
-      console.log(key)
-
-    }
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("exhibition");

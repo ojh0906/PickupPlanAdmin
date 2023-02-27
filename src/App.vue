@@ -12,7 +12,7 @@ const isExpiryAuth = dayjs().isAfter(expiryTime);
 
 <template>
   <div class="container">
-    <Gnb ref="gnb" v-if="isAuthenticated && !isExpiryAuth"/>
+    <Gnb ref="gnb" v-if="isAuthenticated"/>
     <router-view />
   </div>
 </template>
