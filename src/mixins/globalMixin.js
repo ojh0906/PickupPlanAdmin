@@ -6,12 +6,12 @@ export default {
       if (data !== "" && data !== "[]" && typeof data !== "undefined") {
         let file = JSON.parse(data);
         // console.log(file[index].path);
-        return "http://52.78.13.239:8010" + file[0].path;
+        return `${import.meta.env.VITE_FILE_URL}${file[0].path}`;
       }
       return "";
     },
     getImagePath: (data) => {
-        return "http://52.78.13.239:8010" + data;
+      return `${import.meta.env.VITE_FILE_URL}${data}`;
     },
     getFileDownPath: (data) => {
       return `${import.meta.env.VITE_API_URL}/file/download?path=${data.path}&name=${data.name}`;

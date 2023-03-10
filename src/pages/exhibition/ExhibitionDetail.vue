@@ -38,7 +38,7 @@
               <td>썸네일</td>
               <td>
                 <a class="cursor-pointer"
-                   @click="getFileDown(file.path, file.name)"
+                   @click="getFileDown(file)"
                    v-for="file in this.projectStore.project.thumbJson">{{ file.name }}</a>
               </td>
             </tr>
@@ -46,7 +46,7 @@
               <td>첨부 파일</td>
               <td>
                 <a class="cursor-pointer"
-                   @click="getFileDown(file.path, file.name)"
+                   @click="getFileDown(file)"
                    v-for="file in this.projectStore.project.filesJson">{{ file.name }}</a>
               </td>
             </tr>
@@ -71,7 +71,7 @@
 <script>
 import Header from '/src/components/common/Header.vue';
 import Table from '/src/components/list/Table.vue';
-import {useProjectStore, useFileStore} from '@/_stores';
+import {useProjectStore} from '@/_stores';
 
 export default {
   components: {
@@ -80,10 +80,8 @@ export default {
   },
   setup(){
     const projectStore = useProjectStore();
-    const fileStore = useFileStore();
     return {
       projectStore,
-      fileStore,
     }
   },
   data() {
