@@ -16,6 +16,7 @@
           </div>
         </div>
         <div class="content-wrap">
+          <img :src="this.getFirstImagePath(this.projectStore.project.thumb)"/>
           <div v-html="this.projectStore.project.content"></div>
           <table>
             <tr>
@@ -34,14 +35,14 @@
               <td>유료/무료</td>
               <td>{{ this.projectStore.project.free ? '무료':'유료' }}</td>
             </tr>
-            <tr>
+<!--            <tr>
               <td>썸네일</td>
               <td>
                 <a class="cursor-pointer"
                    @click="getFileDown(file)"
                    v-for="file in this.projectStore.project.thumbJson">{{ file.name }}</a>
               </td>
-            </tr>
+            </tr>-->
             <tr>
               <td>첨부 파일</td>
               <td>
