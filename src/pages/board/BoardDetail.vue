@@ -12,14 +12,13 @@
           <span class="regdate">{{ this.formattedDate(this.boardStore.board.regdate) }}</span>
           <span class="title">{{ this.boardStore.board.title }}</span>
         </div>
-        <div class="content">
-          {{ this.boardStore.board.content }}
+        <div class="content" v-html="this.boardStore.board.content">
         </div>
         <!--  파일 리스트  -->
         <div class="file-list">
           <div class="file" v-for="file in this.boardStore.board.files" >
             <i class="far fa-file-alt"></i>
-            <a>{{ file.name }}</a>
+            <a class="cursor-pointer" @click="getFileDown(file)">{{ file.name }}</a>
           </div>
         </div>
         <!--  이전/다음 글  -->
@@ -67,6 +66,9 @@ export default {
     getDetail(){
       this.boardStore.getById(this.board).then((resp) => {
       }).catch(err => { console.log("err", err); });
+    },
+    getFileDown(file){
+      location.href = this.getFileDownPath(file);
     },
   },
   created() {

@@ -1,9 +1,9 @@
 export * from './auth';
 export * from './member';
-export * from './project.js';
-export * from './banner.js';
-export * from './board.js';
-export * from './contact.js';
+export * from './project';
+export * from './banner';
+export * from './board';
+export * from './contact';
 export * from './route_history';
 
 

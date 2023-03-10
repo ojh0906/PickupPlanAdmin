@@ -16,32 +16,42 @@
           </div>
         </div>
         <div class="content-wrap">
-            <img>
-            <table>
-              <tr>
-                <td>모집 기간</td>
-                <td>{{ formattedDate(this.projectStore.project.start,'YY.MM.DD') }} ~ {{ formattedDate(this.projectStore.project.end,'YY.MM.DD') }}</td>
-              </tr>
-              <tr>
-                <td>모집 현황</td>
-                <td>{{ this.projectStore.project.apply_cnt }} 명 / {{ this.projectStore.project.total }} 명</td>
-              </tr>
-              <tr>
-                <td>카테고리</td>
-                <td>{{ this.getNameFromValue(this.projectStore.project.category, this.projectStore.category_name_value_list) }}</td>
-              </tr>
-              <tr>
-                <td>유료/무료</td>
-                <td>{{ this.projectStore.project.free ? '무료':'유료' }}</td>
-              </tr>
-              <tr>
-                <td>첨부 파일</td>
-                <td>
-                  <a v-for="file in this.projectStore.project.filesJson">{{ file.name }}</a>
-                </td>
-              </tr>
-            </table>
-            <p class="tag">{{ getTagName(this.projectStore.project.tags) }}</p>
+          <div v-html="this.projectStore.project.content"></div>
+          <table>
+            <tr>
+              <td>모집 기간</td>
+              <td>{{ formattedDate(this.projectStore.project.start,'YY.MM.DD') }} ~ {{ formattedDate(this.projectStore.project.end,'YY.MM.DD') }}</td>
+            </tr>
+            <tr>
+              <td>모집 현황</td>
+              <td>{{ this.projectStore.project.apply_cnt }} 명 / {{ this.projectStore.project.total }} 명</td>
+            </tr>
+            <tr>
+              <td>카테고리</td>
+              <td>{{ this.getNameFromValue(this.projectStore.project.category, this.projectStore.category_name_value_list) }}</td>
+            </tr>
+            <tr>
+              <td>유료/무료</td>
+              <td>{{ this.projectStore.project.free ? '무료':'유료' }}</td>
+            </tr>
+            <tr>
+              <td>썸네일</td>
+              <td>
+                <a class="cursor-pointer"
+                   @click="getFileDown(file.path, file.name)"
+                   v-for="file in this.projectStore.project.thumbJson">{{ file.name }}</a>
+              </td>
+            </tr>
+            <tr>
+              <td>첨부 파일</td>
+              <td>
+                <a class="cursor-pointer"
+                   @click="getFileDown(file.path, file.name)"
+                   v-for="file in this.projectStore.project.filesJson">{{ file.name }}</a>
+              </td>
+            </tr>
+          </table>
+          <p class="tag">{{ getTagName(this.projectStore.project.tags) }}</p>
           <span class="submit" @click="getApply">모집현황보기</span>
         </div>
       </div>
@@ -61,7 +71,7 @@
 <script>
 import Header from '/src/components/common/Header.vue';
 import Table from '/src/components/list/Table.vue';
-import {useProjectStore} from '@/_stores';
+import {useProjectStore, useFileStore} from '@/_stores';
 
 export default {
   components: {
@@ -70,8 +80,10 @@ export default {
   },
   setup(){
     const projectStore = useProjectStore();
+    const fileStore = useFileStore();
     return {
       projectStore,
+      fileStore,
     }
   },
   data() {
@@ -103,7 +115,7 @@ export default {
           if(idx === 0){
             result += t.value
           } else {
-            result += ' '+t.value
+            result += ','+t.value
           }
         });
       }
@@ -133,6 +145,9 @@ export default {
           this.listForTable.push(td_data);
         });
       }
+    },
+    getFileDown(file){
+      location.href = this.getFileDownPath(file);
     },
   },
   created() {

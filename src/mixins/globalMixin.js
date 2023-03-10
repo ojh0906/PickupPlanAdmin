@@ -6,12 +6,15 @@ export default {
       if (data !== "" && data !== "[]" && typeof data !== "undefined") {
         let file = JSON.parse(data);
         // console.log(file[index].path);
-        return "http://file.piium.co.kr" + file[0].path;
+        return "http://52.78.13.239:8010" + file[0].path;
       }
       return "";
     },
     getImagePath: (data) => {
-        return "http://file.piium.co.kr" + data;
+        return "http://52.78.13.239:8010" + data;
+    },
+    getFileDownPath: (data) => {
+      return `${import.meta.env.VITE_API_URL}/file/download?path=${data.path}&name=${data.name}`;
     },
     addComma(number) {
       const result = Number.isInteger(number)

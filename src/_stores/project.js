@@ -90,6 +90,7 @@ export const useProjectStore = defineStore({
             this.getTags(id);
             this.project = resp.data.body;
             this.project.filesJson = JSON.parse(this.project.files);
+            this.project.thumbJson = JSON.parse(this.project.thumb);
           }
         });
       } catch (error) {

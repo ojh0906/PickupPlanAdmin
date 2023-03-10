@@ -10,7 +10,8 @@
           <input type="text" placeholder="제목을 입력해주세요." v-model="this.title"/>
         </div>
         <div class="input-wrap-full">
-          <textarea v-model="this.content"></textarea>
+          <div id="summernote"></div>
+<!--          <textarea v-model="this.content"></textarea>-->
         </div>
         <div class="input-wrap">
           <div class="label">
@@ -231,6 +232,7 @@ export default {
         this.project = this.projectStore.project.project;
         this.title = this.projectStore.project.title;
         this.content = this.projectStore.project.content;
+        $('#summernote').summernote('code', this.content);
         this.start = this.formattedDate(this.projectStore.project.start,'YYYYMMDD');
         this.end = this.formattedDate(this.projectStore.project.end,'YYYYMMDD');
         this.total = this.projectStore.project.total+'';
@@ -281,6 +283,9 @@ export default {
       this.start = this.start_year + ('0' + this.start_month).slice(-2) + ('0' + this.start_day).slice(-2);
       this.end = this.end_year + ('0' + this.end_month).slice(-2) + ('0' + this.end_day).slice(-2);
 
+      // 에디터 내용 적용
+      this.content = $('#summernote').summernote('code');
+
       let formData = new FormData();
       formData.append("title", this.title);
       formData.append("content", this.content);
@@ -321,6 +326,27 @@ export default {
       this.$router.push({name:'ExhibitionList'});
     }
   },
+  mounted() {
+    $('#summernote').summernote({
+      placeholder: '진행 상세 내용을 입력해 주세요',
+      tabsize: 2,
+      height: 300,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ],
+      callbacks: {
+        onChange: function (contents, $editable) {
+          //console.log(this);
+        }
+      }
+    });
+  },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("exhibition");
     if(this.$route.query.key != null){
@@ -329,6 +355,6 @@ export default {
     } else {
       this.initProject();
     }
-  }
+  },
 }
 </script>
