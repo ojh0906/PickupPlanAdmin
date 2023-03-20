@@ -7,40 +7,39 @@
       </div>
       <div class="boardDetail-container">
         <div class="head-wrap">
-          <span class="regdate">2022.02.02</span>
-          <span class="title">FAQ 제목입니다람쥐썬더</span>
+          <span class="regdate">{{ this.formattedDate(this.faqStore.faq.regdate) }}</span>
+          <span class="title">{{ this.faqStore.faq.title }}</span>
         </div>
         <div class="content">
           <p class="sub">답변 내용</p>
-          답변내용 입니다. 답변내용입니다.
+          {{ this.faqStore.faq.content }}
         </div>
         <div class="submit-wrap">
-           <span>확인</span>
-           <span>취소</span>
+          <span @click="goToList">확인</span>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 <script>
 import Header from '/src/components/common/Header.vue';
-import {useContactStore} from '@/_stores';
+import {useFaqStore} from '@/_stores';
 
 export default {
   components: {
     Header,
   },
   setup(){
-    const contactStore = useContactStore();
+    const faqStore = useFaqStore();
     return {
-      contactStore,
+      faqStore,
     }
   },
   data() {
     return {
-      contact:0,
-      reply:'',
+      faq:0,
+      title:'',
+      content:'',
     }
   },
   watch:{
@@ -48,14 +47,21 @@ export default {
   },
   methods: {
     getDetail(){
-
+      this.faqStore.getById(this.faq).then((resp) => {
+      }).catch(err => { console.log("err", err); });
     },
-    submit(){
-
-    }
+    goToList(){
+      this.$router.push({name:'FaqList'});
+    },
   },
   created() {
-    this.$parent.$parent.$refs.gnb.activeBtn("board");
+    this.$parent.$parent.$refs.gnb.activeBtn("faq");
+    if(this.$route.query.key != null){
+      this.faq = this.$route.query.key;
+      this.getDetail();
+    } else {
+      alert('잘못된 접근입니다.');
+    }
   }
 }
 </script>
