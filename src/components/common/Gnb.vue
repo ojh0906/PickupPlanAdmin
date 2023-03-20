@@ -26,6 +26,9 @@
         <router-link :to="{ name: 'BoardList', query: {} }" :class="this.active === 'board' ? 'menu active':'menu'">게시판 관리</router-link>
       </div>
       <div class="menu-item">
+        <router-link :to="{ name: 'FaqList', query: {} }" :class="this.active === 'faq' ? 'menu active':'menu'">FAQ 관리</router-link>
+      </div>
+      <div class="menu-item">
         <router-link :to="{ name: 'BannerList', query: {} }" :class="this.active === 'banner' ? 'menu active':'menu'">배너 관리</router-link>
       </div>
     </div>

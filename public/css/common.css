@@ -1060,6 +1060,12 @@ input[type=checkbox] {
 }
 .boardDetail-container .content{
     min-height: 200px;
+    padding: 25px 0;
+}
+.boardDetail-container .content .sub{
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
 }
 .boardDetail-container .file-list{
     width: 100%;

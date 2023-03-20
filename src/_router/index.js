@@ -6,6 +6,7 @@ import PlanRoutes from "./plan.routes";
 import ExhibitionRoutes from "./exhibition.routes";
 import ContactRoutes from "./contact.routes";
 import BoardRoutes from "./board.routes";
+import FaqRoutes from "./faq.routes";
 import BannerRoutes from "./banner.routes";
 
 
@@ -24,6 +25,7 @@ const routes = [
     ...ExhibitionRoutes,
     ...ContactRoutes,
     ...BoardRoutes,
+    ...FaqRoutes,
     ...BannerRoutes,
     //...NoticeRoutes,
     //...ContactRoutes,
