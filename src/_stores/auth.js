@@ -13,7 +13,8 @@ export const useAuthStore = defineStore({
         auth_token: "",
         expiryTime: "",
         isAuthenticated: false,
-        return_url: null
+        return_url: null,
+        dashInfo:{},
     }),
     actions: {
         async login(id, password) {
@@ -35,6 +36,17 @@ export const useAuthStore = defineStore({
                 // redirect to previous url or default to home page
             } catch (error) {
                 console.log("error user auth", error);             
+            }
+        },
+        async getDashInfo() {
+            try {
+                await http.get(`${baseUrl}/home/info`).then((resp) => {
+                    if (resp.data.code === 200) {
+                        this.dashInfo = resp.data.body;
+                    }
+                });
+            } catch (error) {
+                console.log("error user auth", error);
             }
         },
         logout() {

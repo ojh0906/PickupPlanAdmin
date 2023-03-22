@@ -4,17 +4,17 @@
       <p class="page-name"><span class="colored">픽업플랜</span> 관리자 센터</p>
     </div>
     <div class="home-menu">
-      <router-link :to="{ name: 'Index', query: {} }" :class="this.active === 'dash' ? 'menu active':'menu'">홈(대시보드) - 준비중</router-link>
+      <router-link :to="{ name: 'Index', query: {} }" :class="this.active === 'dash' ? 'menu active':'menu'">홈(대시보드)</router-link>
     </div>
     <div class="menu-list-container">
       <div class="menu-item">
         <router-link :to="{ name: 'MemberList', query: {} }" :class="this.active === 'member' ? 'menu active':'menu'">회원 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'ContentsList', query: {} }" :class="this.active === 'contents' ? 'menu active':'menu'">콘텐츠 관리 - 준비중</router-link>
+        <router-link :to="{ name: 'ContentsList', query: {} }" :class="this.active === 'contents' ? 'menu active':'menu'">콘텐츠 관리</router-link>
       </div>
       <div class="menu-item">
-        <router-link :to="{ name: 'PlanList', query: {} }" :class="this.active === 'plan' ? 'menu active':'menu'">플랜 관리 - 준비중</router-link>
+        <router-link :to="{ name: 'PlanList', query: {} }" :class="this.active === 'plan' ? 'menu active':'menu'">플랜 관리</router-link>
       </div>
       <div class="menu-item">
         <router-link :to="{ name: 'ExhibitionList', query: {} }" :class="this.active === 'exhibition' ? 'menu active':'menu'">기획전 관리</router-link>
