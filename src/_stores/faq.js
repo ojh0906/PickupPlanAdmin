@@ -85,7 +85,7 @@ export const useFaqStore = defineStore({
       return await http.put(`${baseUrl}/${id}`, params);
     },
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeFaqList: checkList })
+      return await http.post(`${baseUrl}/remove`, { faqList: checkList })
     },
     goToModify(key){
       router.push({name:'FaqWrite', query: {key:key }});

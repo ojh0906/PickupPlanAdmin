@@ -96,7 +96,7 @@ export const useBannerStore = defineStore({
       });
     },
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeBannerList: checkList })
+      return await http.post(`${baseUrl}/remove`, { bannerList: checkList })
     },
   },
 });

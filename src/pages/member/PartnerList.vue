@@ -14,7 +14,10 @@
               <p class="button" @click="removeAll">선택 삭제</p>
             </div>
             <div class="filter-wrap">
-              <p class="button" @click="approvePartnerAll(3)">승인하기</p>
+              <p class="button" @click="updateStateAll(3)">선택 승인</p>
+            </div>
+            <div class="filter-wrap">
+              <p class="button" @click="updateStateAll(4)">선택 반려</p>
             </div>
           </div>
         </div>
@@ -119,7 +122,7 @@ export default {
         });
       });
       if(checkList.length === 0){
-        alert('삭제할 회원을 확인해주세요.')
+        alert('삭제할 회원을 선택해주세요.')
         return;
       }
       this.memberStore.removeAll(checkList).then((resp) => {
@@ -134,7 +137,7 @@ export default {
         }
       }).catch(err => { console.log("err", err); });
     },
-    approvePartnerAll(state){
+    updateStateAll(state){
       var checkList = [];
       this.listForTable.forEach((tr, idx) => {
         var add = true;
@@ -161,7 +164,7 @@ export default {
         alert('승인할 회원을 확인해주세요.');
         return;
       }
-      this.memberStore.approvePartnerAll(state, checkList).then((resp) => {
+      this.memberStore.updateStateAll(state, checkList).then((resp) => {
         if(resp.data.code === 200){
           if(state === 3){
             alert('승인되었습니다.');

@@ -94,10 +94,10 @@ export const useMemberStore = defineStore({
       }
     },
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeMemberList: checkList })
+      return await http.post(`${baseUrl}/remove`, { memberList: checkList })
     },
-    async approvePartnerAll(state, checkList) {
-      return await http.post(`${baseUrl}/state`, { state:state, modifyMemberList: checkList })
+    async updateStateAll(state, checkList) {
+      return await http.post(`${baseUrl}/state`, { state:state, memberList: checkList })
     },
   },
 });

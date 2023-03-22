@@ -148,7 +148,7 @@ export const useBoardStore = defineStore({
       });
     },
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeBoardList: checkList })
+      return await http.post(`${baseUrl}/remove`, { boardList: checkList })
     },
     goToBoardModify(key){
       router.push({name:'BoardWrite', query: {key:key }});

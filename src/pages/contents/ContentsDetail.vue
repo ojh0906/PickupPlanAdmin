@@ -94,6 +94,9 @@
           <div class="img-wrap">
             <p>강의 미리 보기</p>
             <div class="img-scroll">
+              <img src="/vite.svg">
+              <img src="/vite.svg">
+              <img src="/vite.svg">
             </div>
           </div>
         </div>

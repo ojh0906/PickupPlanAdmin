@@ -141,7 +141,7 @@ export const useProjectStore = defineStore({
     },
     // 삭제
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { removeProjectList: checkList })
+      return await http.post(`${baseUrl}/remove`, { projectList: checkList })
     },
     goToMemberDetail(key){
       router.push({name:'MemberDetail', query: {key:key }});

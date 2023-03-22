@@ -10,10 +10,8 @@
       <div class="board-container">
         <div class="board-filter-wrap">
           <div class="filter-container">
-            <div class="filter-container">
-              <div class="filter-wrap">
-                <p class="button" @click="removeAll">선택 삭제</p>
-              </div>
+            <div class="filter-wrap">
+              <p class="button" @click="removeAll">선택 삭제</p>
             </div>
           </div>
         </div>

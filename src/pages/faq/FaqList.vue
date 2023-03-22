@@ -119,7 +119,7 @@ export default {
         });
       });
       if(checkList.length === 0){
-        alert('삭제할 게시글을 확인해주세요.')
+        alert('삭제할 게시글을 선택해주세요.')
         return;
       }
       this.faqStore.removeAll(checkList).then((resp) => {

@@ -7,7 +7,6 @@
         <!-- 검색 -->
         <Search :search_type_list="this.boardStore.search_type_list" @getListAfterSearching="getListAfterSearching"/>
       </div>
-
       <div class="board-container">
         <div class="board-filter-wrap">
           <div class="filter-container">
@@ -120,7 +119,7 @@ export default {
         });
       });
       if(checkList.length === 0){
-        alert('삭제할 게시글을 확인해주세요.')
+        alert('삭제할 게시글을 선택해주세요.')
         return;
       }
       this.boardStore.removeAll(checkList).then((resp) => {

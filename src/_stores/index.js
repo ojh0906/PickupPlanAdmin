@@ -5,6 +5,8 @@ export * from './banner';
 export * from './board';
 export * from './contact';
 export * from './faq';
+export * from './contents';
+export * from './category';
 export * from './route_history';
 
 

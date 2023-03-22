@@ -4,7 +4,7 @@
       <p class="page-name"><span class="colored">픽업플랜</span> 관리자 센터</p>
     </div>
     <div class="home-menu">
-      <router-link :to="{ name: 'Index', query: {} }" :class="this.active === 'dash' ? 'menu active':'menu'">홈(대시보드)</router-link>
+      <router-link :to="{ name: 'Index', query: {} }" :class="this.active === 'dash' ? 'menu active':'menu'">홈(대시보드) - 준비중</router-link>
     </div>
     <div class="menu-list-container">
       <div class="menu-item">

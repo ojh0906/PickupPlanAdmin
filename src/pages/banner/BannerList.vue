@@ -116,7 +116,7 @@ export default {
         });
       });
       if(checkList.length === 0){
-        alert('삭제할 배너를 확인해주세요.')
+        alert('삭제할 배너를 선택해주세요.')
         return;
       }
       this.bannerStore.removeAll(checkList).then((resp) => {
