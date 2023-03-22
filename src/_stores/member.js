@@ -56,8 +56,8 @@ export const useMemberStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.member_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.member_list = [];
           if (resp.data.code === 200) {
             this.member_list = resp.data.body;
             this.member_list_total = resp.data.total;

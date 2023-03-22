@@ -39,8 +39,8 @@ export const useFaqStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.faq_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.faq_list = [];
           if (resp.data.code === 200) {
             this.faq_list = resp.data.body;
             this.faq_list_total = resp.data.total;

@@ -7,6 +7,7 @@ export * from './contact';
 export * from './faq';
 export * from './contents';
 export * from './category';
+export * from './plan';
 export * from './route_history';
 
 

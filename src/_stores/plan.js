@@ -2,22 +2,24 @@ import {defineStore} from "pinia";
 import {http} from "@/_services";
 import router from '@/_router';
 
-const baseUrl = `/admin/contents`;
+const baseUrl = `/admin/plan`;
 
 const header = [
   {title:'', width:'3%', type:'checkbox', val:false},
   {title:'상태', width:'8%'},
+  {title:'일반/파트너', width:'8%'},
   {title:'아이디', width:'10%'},
   {title:'구분', width:'15%'},
   {title:'등록일', width:'15%'},
-  {title:'콘텐츠명', width:'35%'},
+  {title:'플랜명', width:'30%'},
+  {title:'콘텐츠', width:'10%'},
   {title:'', width:'20%'},
 ];
 const header2 = [
   {title:'', width:'3%', type:'checkbox', val:false},
   {title:'구분', width:'15%'},
   {title:'아이디', width:'10%'},
-  {title:'콘텐츠명', width:'35%'},
+  {title:'플랜명', width:'35%'},
   {title:'', width:'20%'},
 ];
 const search_type_list = [
@@ -29,8 +31,8 @@ const page_block_list = [
   { text: '5개씩 보기', value: 5},
 ];
 
-export const useContentsStore = defineStore({
-  id: "contents",
+export const usePlanStore = defineStore({
+  id: "plan",
   state: () => ({
     header:header,
     header2:header2,
@@ -43,23 +45,23 @@ export const useContentsStore = defineStore({
     start_page:999999,
     end_page:999999,
     pagesList:[],
-    contents_list: [],
-    contents_list_total:0,
-    contents: {},
-    contents_modal_list: [],
-    partner_contents_list: [],
+    plan_list: [],
+    plan_list_total:0,
+    plan: {},
+    plan_modal_list: [],
+    partner_plan_list: [],
   }),
   actions: {
     async getAll(params) {
       try {
-        this.contents_list = [];
+        this.plan_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
           if (resp.data.code === 200) {
-            this.contents_list = resp.data.body;
-            this.contents_list_total = resp.data.total;
+            this.plan_list = resp.data.body;
+            this.plan_list_total = resp.data.total;
 
             // 페이징 셋팅
-            this.endPage = Math.ceil(this.contents_list_total / this.page_block)
+            this.endPage = Math.ceil(this.plan_list_total / this.page_block)
             this.pagesList = [];
 
             this.start_page = (Math.ceil(this.page / this.num_block) - 1) * this.num_block + 1;
@@ -79,22 +81,22 @@ export const useContentsStore = defineStore({
     },
     async getModalAll(params) {
       try {
-        this.contents_modal_list = [];
+        this.plan_modal_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
           if (resp.data.code === 200) {
-            this.contents_modal_list = resp.data.body;
+            this.plan_modal_list = resp.data.body;
           }
         });
       } catch (error) {
         console.log(error);
       }
     },
-    async getPartnerContentsList(params) {
+    async getPartnerPlanList(params) {
       try {
-        this.partner_contents_list = [];
+        this.partner_plan_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
           if (resp.data.code === 200) {
-            this.partner_contents_list = resp.data.body;
+            this.partner_plan_list = resp.data.body;
           }
         });
       } catch (error) {
@@ -104,9 +106,11 @@ export const useContentsStore = defineStore({
     async getById(id) {
       try {
         await http.get(`${baseUrl}/${id}`).then(resp => {
+          console.log(resp)
           if (resp.data.code === 200) {
-            this.contents = resp.data.body;
-            this.contents.imagesArray = JSON.parse(resp.data.body.images);
+            this.plan = resp.data.body;
+            //this.contact.files = JSON.parse(this.contact.files)
+            //this.getReply(id);
           }
         });
       } catch (error) {
@@ -114,7 +118,7 @@ export const useContentsStore = defineStore({
       }
     },
     async removeAll(checkList) {
-      return await http.post(`${baseUrl}/remove`, { contentsList: checkList })
+      return await http.post(`${baseUrl}/remove`, { planList: checkList })
     },
     /*async getReply(id) {
       try {
@@ -140,15 +144,15 @@ export const useContentsStore = defineStore({
       return result;
     },
     async updateConfirmAll(confirm, checkList) {
-      return await http.post(`${baseUrl}/column/all`, { confirm:confirm, contentsList: checkList })
+      return await http.post(`${baseUrl}/column/all`, { confirm:confirm, planList: checkList })
     },
     async updateRecommendAll(recommend, checkList) {
-      return await http.post(`${baseUrl}/column/all`, { recommend:recommend, contentsList: checkList })
+      return await http.post(`${baseUrl}/column/all`, { recommend:recommend, planList: checkList })
     },
     goToDetail(key, params){
-      router.push({name:'ContentsDetail', query: {key:key }});
+      router.push({name:'PlanDetail', query: {key:key }});
       this.getById(key);
-      this.getPartnerContentsList(params);
-    }
+      this.getPartnerPlanList(params);
+    },
   },
 });

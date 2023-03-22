@@ -21,12 +21,6 @@
             </div>
           </div>
         </div>
-<!--        <div class="board-filter-right-wrap">
-          <span class="edit-btn">등록 하기</span>
-          <select>
-            <option value="">필터 선택</option>
-          </select>
-        </div>-->
         <Filter :page_block_list="this.contentsStore.page_block_list" @getListAfterChangingPageBlock="getListAfterChangingPageBlock"/>
         <div class="board-btn-wrap">
           <a :class="['cursor-pointer', this.confirmBool?'edit-btn':'del-btn']" @click="this.confirmBool = !this.confirmBool; this.getListOtherPage(1);">승인대기</a>
@@ -72,7 +66,6 @@ export default {
       listForTable:[],
       searchType:'',
       searchKeyword:'',
-      categoryList:[],
       confirmBool:false,
     }
   },
@@ -186,10 +179,8 @@ export default {
       }).catch(err => { console.log("err", err); });
     },
     getCategoryList(type) {
-      this.categoryList = [];
       this.fieldStore.listCategory({type: type}).then((resp) => {
         if(resp.data.code == 200){
-          console.log(resp);
           this.fieldStore.categoryList = resp.data.body;
           this.getListAfterChangingPageBlock(this.contentsStore.page_block_list[0].value);
         }

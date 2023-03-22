@@ -42,8 +42,8 @@ export const useBannerStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.banner_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.banner_list = [];
           if (resp.data.code === 200) {
             this.banner_list = resp.data.body;
             this.banner_list_total = resp.data.total;

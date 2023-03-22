@@ -46,8 +46,8 @@ export const useContactStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.contact_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.contact_list = [];
           if (resp.data.code === 200) {
             this.contact_list = resp.data.body;
             this.contact_list_total = resp.data.total;

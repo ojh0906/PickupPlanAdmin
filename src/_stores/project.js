@@ -57,9 +57,9 @@ export const useProjectStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.project_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
           //console.log("list :::::::::::: ",resp);
-          this.project_list = [];
           if (resp.data.code === 200) {
             this.project_list = resp.data.body;
             this.project_list_total = resp.data.total;

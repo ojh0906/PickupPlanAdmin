@@ -19,13 +19,13 @@
         <div class="board-filter-wrap">
           <div class="filter-container">
             <div class="filter-wrap">
-              <p class="button" @click="recommendModify(0)">선택 삭제</p>
+              <p class="button" @click="recommendRemove">선택 삭제</p>
             </div>
           </div>
         </div>
         <Filter :page_block_list="this.contentsStore.page_block_list" @getListAfterChangingPageBlock="getListAfterChangingPageBlock"/>
         <div class="board-btn-wrap">
-          <a :class="['cursor-pointer edit-btn']" @click="this.modalOpen = true;">등록하기</a>
+          <a :class="['cursor-pointer edit-btn']" @click="openModal">등록하기</a>
         </div>
 
         <!-- 리스트 영역 -->
@@ -37,13 +37,13 @@
     </div>
   </div>
 
-  <div class="modal-background" v-if="this.modalOpen"></div>
+  <div class="modal-background" v-if="this.modalOpen" @click="closeModal"></div>
   <div class="contents-modal modal" v-if="this.modalOpen">
     <div class="modal-head">
       <p class="title">등록</p>
     </div>
     <div class="search-wrap">
-      <input type="text" placeholder="강좌 검색" v-model="this.searchKeyword"/>
+      <input type="text" placeholder="강좌 검색" v-model="this.searchKeyword" @keypress.enter="getModalAll"/>
       <span><i class="fas fa-search" @click="getModalAll"></i></span>
     </div>
     <div class="list-container" style="overflow-y: scroll;">
@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                   <td>{{ contents.member_info.id }}</td>
-                  <td>No. {{ contents.contents }}</td>
+                  <td>{{ this.fieldStore.getFieldName(1,contents.category) }}</td>
                 </tr>
                 <tr>
                   <td>{{ contents.hour }}</td>
@@ -68,7 +68,7 @@
             </table>
           </div>
         </div>
-        <div class="btn">
+        <div class="btn" @click="recommendAdd(contents.contents)">
           <span>등록</span>
         </div>
       </div>
@@ -137,6 +137,7 @@ export default {
       this.contentsStore.contents_list.forEach((contents, idx) => {
         let td_data = [];
         td_data.push({t:'', class:'', type:'checkbox', param:{check:false, contents:contents.contents, confirm:contents.confirm}});
+        td_data.push({t:this.fieldStore.getFieldName(1,contents.category), class:'', type:'text', param:{}});
         td_data.push({t:contents.member_info.id, class:'', type:'text', param:{}});
         td_data.push({t:contents.title, class:'', type:'text', param:{}});
         td_data.push({t:'', class:'', type:'link', param:{link:[{text:'상세보기', href:'ContentsDetail', key:contents.contents}]}});
@@ -156,7 +157,7 @@ export default {
       this.contentsStore.page = page;
       this.getList();
     },
-    recommendModify(recommend){
+    recommendRemove(){
       var checkList = [];
       this.listForTable.forEach((tr, idx) => {
         tr.forEach((td, idx) => {
@@ -166,21 +167,28 @@ export default {
         });
       });
       if(checkList.length === 0){
-        alert('승인처리할 콘텐츠를 선택해주세요.')
+        alert('추천 삭제할 콘텐츠를 선택해주세요.')
         return;
       }
-      this.contentsStore.updateRecommendAll(recommend, checkList).then((resp) => {
+      this.contentsStore.updateRecommendAll(0, checkList).then((resp) => {
         if(resp.data.code === 200){
-          if(recommend){
-            alert('추가되었습니다.');
-          } else {
-            alert('삭제되었습니다.');
-          }
+          alert('삭제되었습니다.');
           this.contentsStore.header.forEach((h, idx) => {
             if(h.type === 'checkbox'){
               h.val = false;
             }
           });
+          this.getListOtherPage(1);
+        }
+      }).catch(err => { console.log("err", err); });
+    },
+    recommendAdd(contents){
+      var checkList = [];
+      checkList.push({contents:contents})
+      this.contentsStore.updateRecommendAll(1, checkList).then((resp) => {
+        if(resp.data.code === 200){
+          alert('추가되었습니다.');
+          this.closeModal();
           this.getListOtherPage(1);
         }
       }).catch(err => { console.log("err", err); });
@@ -208,11 +216,19 @@ export default {
         console.log(this.contentsStore.contents_modal_list)
       }).catch(err => { console.log("err", err); });
     },
+    openModal(){
+      this.modalOpen = true;
+      this.getModalAll();
+    },
+    closeModal(){
+      this.modalOpen = false;
+      this.searchKeyword = '';
+      this.getModalAll();
+    }
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("contents");
     this.getCategoryList(1);
-    this.getModalAll();
   }
 }
 </script>

@@ -57,8 +57,8 @@ export const useBoardStore = defineStore({
   actions: {
     async getAll(params) {
       try {
+        this.board_list = [];
         await http.post(`${baseUrl}/list`, params).then(resp => {
-          this.board_list = [];
           if (resp.data.code === 200) {
             this.board_list = resp.data.body;
             this.board_list_total = resp.data.total;
