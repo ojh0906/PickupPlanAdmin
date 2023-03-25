@@ -18,7 +18,7 @@
         <div class="file-list" v-if="this.contactStore.contact.files != null && this.contactStore.contact.files.length !== 0">
           <div class="file" v-for="file in this.contactStore.contact.files">
             <i class="far fa-file-alt"></i>
-            <a>{{ file.name }}</a>
+            <a class="cursor-pointer" @click="getFileDown(file)">{{ file.name }}</a>
           </div>
         </div>
         <div class="answer-wrap">
@@ -84,7 +84,10 @@ export default {
           //this.goToBoardList();
         }
       }).catch(err => { console.log("err", err); });
-    }
+    },
+    getFileDown(file){
+      location.href = this.getFileDownPath(file);
+    },
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("contact");
