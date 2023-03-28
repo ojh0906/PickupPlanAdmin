@@ -88,7 +88,7 @@ export default {
       this.listForTable = [];
       this.memberStore.member_list.forEach((member, idx) => {
         let td_data = [];
-        td_data.push({t:'', class:'', type:'checkbox', param:{check:false, member:member.member}});
+        td_data.push({t:'', class:'', type:'checkbox', param:{check:false, member:member.member, state:member.partner_info == null ? 3:member.partner_info.state}});
         td_data.push({t:this.getNameFromValue(member.type, this.memberStore.type_name_value_list), class:'', type:'text', param:{}});
         td_data.push({t:this.getNameFromValue(member.partner_info == null ? 3:member.partner_info.state, this.memberStore.state_name_value_list), class:'', type:'text', param:{}});
         td_data.push({t:this.formattedDate(member.regdate,'YY.MM.DD'), class:'bold', type:'text', param:{}});
@@ -138,39 +138,37 @@ export default {
       }).catch(err => { console.log("err", err); });
     },
     updateStateAll(state){
+      var stateStr = '';
+      if(state === 3){
+        stateStr = '승인'
+      } else {
+        stateStr = '반려'
+      }
       var checkList = [];
+      var apply = false;
       this.listForTable.forEach((tr, idx) => {
-        var add = true;
-        var member = 0;
         tr.forEach((td, idx) => {
-          if(td.type === 'checkbox'){
-            member = td.param.member;
-          }
-          if(td.type === 'checkbox' && !td.param.check){ // 체크 안된거 제외
-            add = false;
-          }
-          if(td.t === this.getNameFromValue(3, this.memberStore.state_name_value_list)){ // 완료 상태 제외
-            add = false;
-          }
-          if(td.t === this.getNameFromValue(4, this.memberStore.state_name_value_list)){ // 거절 상태 제외
-            add = false;
+          if(td.type === 'checkbox' && td.param.check){
+            checkList.push({member:td.param.member})
+            if(td.param.state == 3 || td.param.state == 4){ // 완료나 반려상태
+              apply = true;
+            }
           }
         });
-        if(add){
-          checkList.push({member:member})
-        }
       });
       if(checkList.length === 0){
-        alert('승인할 회원을 확인해주세요.');
+        alert(stateStr+'할 회원을 확인해주세요.');
         return;
-      }
+      };
+
+      if(apply){
+        alert('강사/파트너 신청 상태만 체크해주세요.');
+        return;
+      };
+
       this.memberStore.updateStateAll(state, checkList).then((resp) => {
         if(resp.data.code === 200){
-          if(state === 3){
-            alert('승인되었습니다.');
-          } else {
-            alert('거절되었습니다.');
-          }
+          alert(stateStr + '되었습니다.');
           this.memberStore.header.forEach((h, idx) => {
             if(h.type === 'checkbox'){
               h.val = false;

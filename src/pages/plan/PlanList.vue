@@ -97,7 +97,7 @@ export default {
       this.listForTable = [];
       this.planStore.plan_list.forEach((plan, idx) => {
         let td_data = [];
-        td_data.push({t:'', class:'', type:'checkbox', param:{check:false, plan:plan.plan, confirm:plan.confirm, type:plan.type}});
+        td_data.push({t:'', class:'', type:'checkbox', param:{check:false, plan:plan.plan, confirm:plan.confirm, type:plan.member_info.type}});
         td_data.push({t:this.planStore.getConfirmName(plan.confirm), class:'', type:'text', param:{}});
         td_data.push({t:plan.member_info.type === 1 ? '일반':'파트너', class:'', type:'text', param:{}});
         td_data.push({t:plan.member_info.id, class:'', type:'text', param:{}});
@@ -158,7 +158,7 @@ export default {
             if(td.param.confirm != 2){
               check = true;
             }
-            if(td.param.type != 2){
+            if(td.param.type == 1){
               type = true;
             }
           }

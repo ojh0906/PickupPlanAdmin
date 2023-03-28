@@ -30,7 +30,7 @@ const state_name_value_list = [
   { name: '강사 신청', value: 1},
   { name: '파트너 신청', value: 2},
   { name: '완료', value: 3},
-  { name: '거절', value: 4},
+  { name: '반려', value: 4},
 ];
 
 export const useMemberStore = defineStore({

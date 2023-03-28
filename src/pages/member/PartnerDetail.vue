@@ -90,22 +90,30 @@
             {{ this.memberStore.member.partner_info.email }}
           </div>
           <div class="title-wrap">
-            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ? '사업자등록증' : '이력서' }}
+            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ? '이력서' : '사업자등록증' }}
           </div>
           <div class="val-wrap">
-            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ?
-              this.getFirstImageName(this.memberStore.member.partner_info.company_file) :
-              this.getFirstImageName(this.memberStore.member.partner_info.resume_file)
-            }}
+            <p class="cursor-pointer" @click="getFileDown(this.memberStore.member.partner_info.resume_file)"
+               v-if="this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2">
+              {{ this.getFirstImageName(this.memberStore.member.partner_info.resume_file) }}
+            </p>
+            <p class="cursor-pointer" @click="getFileDown(this.memberStore.member.partner_info.company_file)"
+               v-else>
+              {{ this.getFirstImageName(this.memberStore.member.partner_info.company_file) }}
+            </p>
           </div>
           <div class="title-wrap">
-            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ? '회사소개서' : '프로필' }}
+            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ? '프로필' : '회사소개서' }}
           </div>
           <div class="val-wrap">
-            {{ this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2 ?
-              this.getFirstImageName(this.memberStore.member.partner_info.company_info) :
-              this.getFirstImageName(this.memberStore.member.partner_info.profile_file)
-            }}
+            <p class="cursor-pointer" @click="getFileDown(this.memberStore.member.partner_info.profile_file)"
+               v-if="this.memberStore.member.partner_info.state === 1 || this.memberStore.member.type === 2">
+              {{ this.getFirstImageName(this.memberStore.member.partner_info.profile_file) }}
+            </p>
+            <p class="cursor-pointer" @click="getFileDown(this.memberStore.member.partner_info.company_info)"
+               v-else>
+              {{ this.getFirstImageName(this.memberStore.member.partner_info.company_info) }}
+            </p>
           </div>
           <div class="info-title">
             소개
@@ -202,6 +210,9 @@ export default {
     getDetail(){
       this.memberStore.getById(this.member).then((resp) => {
       }).catch(err => { console.log("err", err); });
+    },
+    getFileDown(file){
+      location.href = this.getFileDownPath(JSON.parse(file)[0]);
     },
   },
   created() {
