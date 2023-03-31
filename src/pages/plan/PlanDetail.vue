@@ -30,7 +30,7 @@
                   강사목록
                 </td>
                 <td>
-                  <span class="more">목록보기</span>
+                  <span class="more" @click="this.modalOpen = true;">목록보기</span>
                 </td>
               </tr>
               <tr>
@@ -227,8 +227,8 @@
       </div>
     </div>
   </div>
-  <div class="modal-background hidden"></div>
-  <div class="modal tutor-modal hidden">
+  <div class="modal-background" v-if="this.modalOpen" @click="this.modalOpen = false;"></div>
+  <div class="modal tutor-modal" v-if="this.modalOpen">
     <div class="modal-head">
       <p class="title">강사 목록</p>
     </div>
@@ -238,26 +238,14 @@
         <th width="80%">강사명</th>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>강백호</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>채치수</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>송태섭</td>
+        <tr v-for="(member, index) in this.memberList">
+          <td>{{ index + 1 }}</td>
+          <td>{{ member.partner_info.name }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
-
-
-
-
 
 <script>
 import { ref } from "vue";
@@ -289,6 +277,8 @@ export default {
     return {
       plan: 0,
       tab: 0,
+      modalOpen:false,
+      memberList:[],
       planCurriculum: ref({}),
       planCurriculumCalendarItems: ref([]),
       planCurriculumMinDate: ref(dayjs()),
@@ -331,6 +321,7 @@ export default {
 
         this.getPartnerContentsList(this.planStore.plan.member_info.member);
         this.getPartnerPlanList(this.planStore.plan.member_info.member);
+        this.getPartnerList();
       }).catch(err => { console.log("err", err); });
     },
     getCategoryList(type) {
@@ -358,6 +349,14 @@ export default {
       }
       this.planStore.getPartnerPlanList(params).then((resp) => {
       }).catch(err => { console.log("err", err); });
+    },
+    getPartnerList(){
+      this.planStore.plan.plan_contents.forEach((plan_contents,i)=>{
+        let filterList = this.memberList.filter(m => m.member === plan_contents.contents_info.member);
+        if(filterList.length === 0){
+          this.memberList.push(plan_contents.contents_info.member_info);
+        }
+      });
     },
   },
   created() {
