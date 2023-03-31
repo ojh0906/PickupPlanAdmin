@@ -1528,6 +1528,28 @@ input[type=checkbox] {
     font-weight: 700;
     font-size: 18px;
 }
+.tutor-modal{
+    display: block;
+}
+.tutor-modal table{
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+.tutor-modal table td,
+.tutor-modal table th{
+    font-size: 18px;
+    padding: 7px;
+    box-sizing: border-box;
+    border:1px solid #000;
+}
+.tutor-modal table th{
+    font-weight: 700;
+    background: #ececec;
+}
 .exhibition-modal table{
     width: 100%;
     border-collapse: collapse;

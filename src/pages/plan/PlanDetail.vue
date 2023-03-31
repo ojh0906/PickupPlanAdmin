@@ -173,9 +173,41 @@
         </div>
       </div>
     </div>
-
   </div>
+  <div class="modal-background"></div>
+  <div class="modal tutor-modal">
+    <div class="modal-head">
+      <p class="title">강사 목록</p>
+    </div>
+    <table>
+      <thead>
+        <th width="20%">순번</th>
+        <th width="80%">강사명</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>강백호</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>채치수</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>송태섭</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
 </template>
+
+
+
+
+
 <script>
 import Header from '/src/components/common/Header.vue';
 import { usePlanStore, useContentsStore, useFieldStore } from '@/_stores';
