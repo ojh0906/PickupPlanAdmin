@@ -258,10 +258,10 @@ export default {
       }).catch(err => { console.log("err", err); });
     },
     getPartnerList(){
-      this.planStore.plan.plan_contents_list.forEach((contents,i)=>{
-        let filterList = this.memberList.filter(m => m.member === contents.member);
+      this.planStore.plan.plan_contents.forEach((plan_contents,i)=>{
+        let filterList = this.memberList.filter(m => m.member === plan_contents.contents_info.member);
         if(filterList.length === 0){
-          this.memberList.push(contents.member_info);
+          this.memberList.push(plan_contents.contents_info.member_info);
         }
       });
     },
