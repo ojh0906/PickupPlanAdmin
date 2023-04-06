@@ -104,7 +104,8 @@
         <div class="tab-content-container">
           <!--   상세정보    -->
           <div class="tab-content active" v-if="this.tab === 0">
-            {{ this.contentsStore.contents.content }}
+            <div v-html="this.showEnterContent(this.contentsStore.contents.content)">
+            </div>
           </div>
           <!--   강사소개    -->
           <div class="tab-content active" v-if="this.tab === 1">

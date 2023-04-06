@@ -69,5 +69,12 @@ export default {
         }
       }
     },
+    showEnterContent(content){
+      if(content != null){
+        return content.replaceAll(/(\n|\r\n)/g,'<br>');
+      } else {
+        return '';
+      }
+    },
   },
 };
