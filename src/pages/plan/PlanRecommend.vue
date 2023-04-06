@@ -50,7 +50,8 @@
       <div class="item" v-for="plan in this.planStore.plan_modal_list">
         <div class="contents">
           <div class="thumb">
-            <img :src="this.getFirstImagePath(plan.thumb)">
+            <img :src="this.getFirstImagePath(plan.thumb)" v-if="plan.thumb !== '[]'">
+            <p v-else>썸네일 없음</p>
           </div>
           <div class="info">
             <table>
@@ -199,6 +200,7 @@ export default {
     },
     getModalAll(){
       let params = {
+        confirm: 3,
         page: this.planStore.page,
         page_block: this.planStore.page_block,
       }

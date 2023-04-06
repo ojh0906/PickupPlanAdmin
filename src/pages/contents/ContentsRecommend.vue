@@ -204,6 +204,7 @@ export default {
     },
     getModalAll(){
       let params = {
+        confirm: 3,
         page: this.contentsStore.page,
         page_block: this.contentsStore.page_block,
       }

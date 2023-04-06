@@ -8,7 +8,8 @@
       <div class="contents-detail-container">
         <div class="info-container">
           <div class="thumb">
-            <img :src="this.getFirstImagePath(this.planStore.plan.thumb)">
+            <img :src="this.getFirstImagePath(this.planStore.plan.thumb)" v-if="this.planStore.plan.thumb !== '[]'">
+            <p v-else>썸네일 없음</p>
           </div>
           <div class="info">
             <table>
