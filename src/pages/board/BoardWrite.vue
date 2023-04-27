@@ -11,10 +11,10 @@
             <option v-for="type in this.boardStore.type_name_value_list" v-bind:value="type.value">{{type.name}}</option>
           </select>
           <select v-model="this.category">
-            <option v-for="category in this.boardStore.category_name_value_list" v-bind:value="category.value">{{category.name}}</option>
+            <option v-for="category in this.fieldStore.category_list" v-bind:value="category.field">{{category.name}}</option>
           </select>
-          <select v-model="this.sub_category">
-            <option v-for="sub_category in this.boardStore.sub_category_name_value_list" v-bind:value="sub_category.value">{{sub_category.name}}</option>
+          <select v-model="this.area">
+            <option v-for="area in this.fieldStore.area_list" v-bind:value="area.field">{{area.name}}</option>
           </select>
         </div>
         <div class="input-wrap-full">
@@ -60,7 +60,7 @@
 </template>
 <script>
 import Header from '/src/components/common/Header.vue';
-import {useBoardStore} from '@/_stores';
+import {useBoardStore, useFieldStore} from '@/_stores';
 
 export default {
   components: {
@@ -68,8 +68,10 @@ export default {
   },
   setup(){
     const boardStore = useBoardStore();
+    const fieldStore = useFieldStore();
     return {
       boardStore,
+      fieldStore,
     }
   },
   data() {
@@ -78,8 +80,8 @@ export default {
       type:0,
       title:'',
       content:'',
-      category:1,
-      sub_category:1,
+      category:0,
+      area:0,
       files:[],
       files_new:[],
       files_del:[],
@@ -88,7 +90,11 @@ export default {
     }
   },
   watch:{
-
+    category : {
+      handler(newValue, oldValue) {
+        this.getCategoryFieldList(newValue, 2);
+      },
+    },
   },
   methods: {
     initBoard(){
@@ -96,8 +102,8 @@ export default {
       this.type = this.boardStore.type_name_value_list[0].value;
       this.title = '';
       this.content = '';
-      this.category = this.boardStore.category_name_value_list[0].value;
-      this.sub_category = this.boardStore.sub_category_name_value_list[0].value;
+      this.category = this.fieldStore.category_list[0].field;
+      this.area = 0;
       this.files = [];
       this.files_new = [];
     },
@@ -130,7 +136,7 @@ export default {
         this.content = this.boardStore.board.content;
         $('#summernote').summernote('code', this.content);
         this.category = this.boardStore.board.category;
-        this.sub_category = this.boardStore.board.sub_category;
+        this.area = this.boardStore.board.area;
         this.files = this.boardStore.board.files
         this.tagList = [];
         this.files_new = [];
@@ -171,7 +177,7 @@ export default {
       formData.append("title", this.title);
       formData.append("content", this.content);
       formData.append("category", this.category);
-      formData.append("sub_category", this.sub_category);
+      formData.append("area", this.area);
       formData.append("tagList", JSON.stringify(this.tagList));
 
       for (var i = 0; i < this.files_new.length; i++) {
@@ -199,7 +205,36 @@ export default {
     },
     goToBoardList(){
       this.$router.push({name:'BoardList'});
-    }
+    },
+    getCategoryList(type) {
+      this.fieldStore.listCategory({type: type}).then((resp) => {
+        if(resp.data.code == 200){
+          this.fieldStore.category_list = resp.data.body;
+          if(this.$route.query.key != null){
+            this.board = this.$route.query.key;
+            this.getDetail();
+          } else {
+            this.initBoard();
+          }
+        }
+      }).catch(err => { console.log("err", err); });
+    },
+    getCategoryFieldList(field, type) {
+      this.fieldStore.listCategory({ type: type, category_field: field }).then((resp) => {
+        if (resp.data.code == 200) {
+          switch (type) {
+            case 2:
+              this.fieldStore.area_list = resp.data.body;
+              if(this.$route.query.key != null){
+                this.area = this.boardStore.board.area;
+              } else {
+                this.area = this.fieldStore.area_list[0].field;
+              }
+              break;
+          }
+        }
+      }).catch(err => { console.log("err", err); });
+    },
   },
   mounted() {
     $('#summernote').summernote({
@@ -224,12 +259,7 @@ export default {
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("board");
-    if(this.$route.query.key != null){
-      this.board = this.$route.query.key;
-      this.getDetail();
-    } else {
-      this.initBoard();
-    }
+    this.getCategoryList(1);
   }
 }
 </script>

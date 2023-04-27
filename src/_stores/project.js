@@ -20,12 +20,7 @@ const page_block_list = [
   { text: '5개씩 보기', value: 5},
 ];
 const day_list = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const category_name_value_list = [
-  { name: 'category1', value: '1'},
-  { name: 'category2', value: '2'},
-  { name: 'category3', value: '3'},
-  { name: 'category4', value: '4'},
-];
+
 const header_apply = [
   {title:'순번', width:'10%'},
   {title:'신청일', width:'20%'},
@@ -40,7 +35,6 @@ export const useProjectStore = defineStore({
     search_type_list:search_type_list,
     page_block_list:page_block_list,
     day_list:day_list,
-    category_name_value_list:category_name_value_list,
     header_apply:header_apply,
     page:1,
     page_block:page_block_list[0].value,

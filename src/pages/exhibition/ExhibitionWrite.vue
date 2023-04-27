@@ -94,11 +94,21 @@
           </div>
           <div class="input-wrap">
             <div class="label">
-              카테고리
+              구분
             </div>
             <div class="input">
               <select v-model="this.category">
-                <option v-for="category in this.projectStore.category_name_value_list" v-bind:value="category.value">{{category.name}}</option>
+                <option v-for="category in this.fieldStore.category_list" v-bind:value="category.field">{{category.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-wrap">
+            <div class="label">
+              영역
+            </div>
+            <div class="input">
+              <select v-model="this.area">
+                <option v-for="area in this.fieldStore.area_list" v-bind:value="area.field">{{area.name}}</option>
               </select>
             </div>
           </div>
@@ -131,7 +141,7 @@
 </template>
 <script>
 import Header from '/src/components/common/Header.vue';
-import {useProjectStore} from '@/_stores';
+import {useProjectStore, useFieldStore} from '@/_stores';
 
 export default {
   components: {
@@ -139,8 +149,10 @@ export default {
   },
   setup(){
     const projectStore = useProjectStore();
+    const fieldStore = useFieldStore();
     return {
       projectStore,
+      fieldStore
     }
   },
   data() {
@@ -151,7 +163,8 @@ export default {
       start:'',
       end:'',
       total:0,
-      category:this.projectStore.category_name_value_list[0].value,
+      category:0,
+      area:0,
       free:false,
       tagStr:'',
       tags:[],
@@ -176,6 +189,11 @@ export default {
         this.total = new Number(this.total.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')).toString();
       },
     },
+    category : {
+      handler(newValue, oldValue) {
+        this.getCategoryFieldList(newValue, 2);
+      },
+    },
   },
   methods: {
     initProject(){
@@ -185,7 +203,8 @@ export default {
       this.start = '';
       this.end = '';
       this.total = '0';
-      this.category = this.projectStore.category_name_value_list[0].value;
+      this.category = this.fieldStore.category_list[0].field;
+      this.area = 0;
       this.free = false;
       this.tagStr = '';
       this.tags = [];
@@ -237,6 +256,7 @@ export default {
         this.end = this.formattedDate(this.projectStore.project.end,'YYYYMMDD');
         this.total = this.projectStore.project.total+'';
         this.category = this.projectStore.project.category;
+        this.area = this.projectStore.project.area;
         this.free = this.projectStore.project.free;
         this.tagStr = this.projectStore.project.tagStr;
         this.files = JSON.parse(this.projectStore.project.files);
@@ -293,6 +313,7 @@ export default {
       formData.append("end", this.end);
       formData.append("total", this.total);
       formData.append("category", this.category);
+      formData.append("area", this.area);
       formData.append("free", this.free);
       formData.append("tagList", JSON.stringify(this.tagList));
 
@@ -324,7 +345,36 @@ export default {
     },
     goToProjectList(){
       this.$router.push({name:'ExhibitionList'});
-    }
+    },
+    getCategoryList(type) {
+      this.fieldStore.listCategory({type: type}).then((resp) => {
+        if(resp.data.code == 200){
+          this.fieldStore.category_list = resp.data.body;
+          if(this.$route.query.key != null){
+            this.project = this.$route.query.key;
+            this.getDetail();
+          } else {
+            this.initProject();
+          }
+        }
+      }).catch(err => { console.log("err", err); });
+    },
+    getCategoryFieldList(field, type) {
+      this.fieldStore.listCategory({ type: type, category_field: field }).then((resp) => {
+        if (resp.data.code == 200) {
+          switch (type) {
+            case 2:
+              this.fieldStore.area_list = resp.data.body;
+              if(this.$route.query.key != null){
+                this.area = this.projectStore.project.area;
+              } else {
+                this.area = this.fieldStore.area_list[0].field;
+              }
+              break;
+          }
+        }
+      }).catch(err => { console.log("err", err); });
+    },
   },
   mounted() {
     $('#summernote').summernote({
@@ -349,12 +399,7 @@ export default {
   },
   created() {
     this.$parent.$parent.$refs.gnb.activeBtn("exhibition");
-    if(this.$route.query.key != null){
-      this.project = this.$route.query.key;
-      this.getDetail();
-    } else {
-      this.initProject();
-    }
+    this.getCategoryList(1);
   },
 }
 </script>

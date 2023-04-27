@@ -28,8 +28,12 @@
               <td>{{ this.projectStore.project.apply_cnt }} 명 / {{ this.projectStore.project.total }} 명</td>
             </tr>
             <tr>
-              <td>카테고리</td>
-              <td>{{ this.getNameFromValue(this.projectStore.project.category, this.projectStore.category_name_value_list) }}</td>
+              <td>구분</td>
+              <td>{{ this.projectStore.project.categoryName }}</td>
+            </tr>
+            <tr>
+              <td>영역</td>
+              <td>{{ this.projectStore.project.areaName }}</td>
             </tr>
             <tr>
               <td>유료/무료</td>

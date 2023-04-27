@@ -33,6 +33,11 @@ export const useFieldStore = defineStore({
               result = f.name;
             }
           }); break;
+          case 2 : this.area_list.forEach((f, i) =>{
+            if(f.field == field){
+              result = f.name;
+            }
+          }); break;
         }
       }
       return result;

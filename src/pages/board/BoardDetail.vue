@@ -14,6 +14,12 @@
         </div>
         <div class="content" v-html="this.boardStore.board.content">
         </div>
+        <!--  구분/영역  -->
+        <div class="file-list">
+          <div class="file">
+            <a class="">{{ this.boardStore.board.categoryName }} | {{ this.boardStore.board.areaName }}</a>
+          </div>
+        </div>
         <!--  파일 리스트  -->
         <div class="file-list">
           <div class="file" v-for="file in this.boardStore.board.files" >
